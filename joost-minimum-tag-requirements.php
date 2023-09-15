@@ -49,6 +49,7 @@ class JoostMinimumTagRequirements {
 		add_filter( 'manage_edit-post_tag_columns', [ $this, 'add_tag_columns' ] );
 		add_filter( 'manage_post_tag_custom_column', [ $this, 'manage_tag_columns' ], 10, 3 );
 		add_filter( 'tag_row_actions', [ $this, 'remove_view_action' ], 10, 2 );
+		add_filter( 'wpseo_exclude_from_sitemap_by_term_ids', [ $this, 'exclude_tags_from_yoast_sitemap' ] );
 	}
 
 	/**
@@ -190,6 +191,39 @@ class JoostMinimumTagRequirements {
 		}
 
 		return $actions;
+	}
+
+	/**
+	 * Excludes tags with fewer than the minimum number of posts from the Yoast SEO sitemap.
+	 *
+	 * @param array $excluded_term_ids An array of term IDs to exclude from the sitemap.
+	 *
+	 * @return array Modified array of term IDs to exclude from the sitemap.
+	 */
+	public function exclude_tags_from_yoast_sitemap( $excluded_term_ids ) {
+		if ( $this->min_tag_count === 0 ) {
+			return $excluded_term_ids;
+		}
+
+		$args = [
+			'taxonomy'   => 'post_tag',
+			'fields'     => 'ids',
+			'hide_empty' => true,
+			'number'     => 0,
+		];
+
+		$tags = get_terms( $args );
+
+		if ( ! is_wp_error( $tags ) ) {
+			foreach ( $tags as $tag_id ) {
+				$term = get_term( $tag_id );
+				if ( $term->count < $this->min_tag_count ) {
+					$excluded_term_ids[] = $tag_id;
+				}
+			}
+		}
+
+		return $excluded_term_ids;
 	}
 }
 
