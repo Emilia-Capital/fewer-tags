@@ -20,6 +20,19 @@ Tags that have less than the configured number of posts:
 
 This positively affects your site\'s SEO and also leads to less crawling, as you have less useless tag pages.
 
+== Frequently Asked Questions ==
+
+=== Can I safely install this on an existing site? ===
+
+So you have a site with a lot of tags that don't add any value? Yes, you can safely add this plugin. It will redirect the useless tag pages to your site's homepage.
+
+=== Should I also noindex my tag pages? ===
+
+No, you should not noindex your tag pages. If your tag pages have more than 10 posts in them, they are valuable ways of getting your site crawled and of combining related content. There's no reason to noindex those pages at that point. What you could (and should) do is add descriptions to those tag pages.
+
+=== How can I report security bugs? ===
+
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/less-tags)
 
 == Installation ==
 1. Search for Less Tags on the repository
