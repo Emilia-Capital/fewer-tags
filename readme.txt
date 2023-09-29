@@ -16,7 +16,7 @@ One of the most common SEO problems on WordPress sites is that people add too ma
 Tags that have less than the configured number of posts:
  * don\'t work on your site, and are redirected to your homepage.
  * no longer show up in tag listings.
- * are no longer linked in Yoast SEO generated XML sitemaps.
+ * are no longer linked in WordPress core's or Yoast SEO generated XML sitemaps.
 
 This positively affects your site\'s SEO and also leads to less crawling, as you have less useless tag pages.
 
