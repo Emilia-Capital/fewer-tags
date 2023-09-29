@@ -2,17 +2,17 @@
 /**
  * Plugin that redirects tag pages to the home page if they contain fewer than a specified number of posts.
  *
- * @package Joost_Blog_NurtureTags
+ * @package Joost_Blog_LessTags
  * @version 1.0
  *
- * Plugin Name: NurtureTags
- * Plugin URI: https://joost.blog/plugins/nurture-tags/
- * Description: Redirects tag pages to the home page if they contain fewer than a specified number of posts, defaults to 10. Change under Settings > Reading.
+ * Plugin Name: LessTags
+ * Plugin URI: https://joost.blog/plugins/less-tags/
+ * Description: Redirects tag pages to the home page if they contain fewer than a specified number of posts, defaults to 10. Change under Settings > Reading. Results in less tags, which is good for SEO.
  * Version: 1.0
  * Author: Joost de Valk
  * Author URI: https://joost.blog/
  * License: GPL-3.0+
- * Text Domain: nurture-tags
+ * Text Domain: less-tags
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,9 +20,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * NurtureTags Class
+ * LessTags Class
  */
-class Joost_Blog_NurtureTags {
+class Joost_Blog_LessTags {
 
 	/**
 	 * Default value for the minimum number of posts a tag should have to not be redirected to the homepage.
@@ -35,7 +35,7 @@ class Joost_Blog_NurtureTags {
 	 * Constructor method
 	 */
 	public function __construct() {
-		$this->min_tag_count = get_option( 'nurture_tags_min_tag_count', 10 );
+		$this->min_tag_count = get_option( 'less_tags_min_tag_count', 10 );
 		add_action( 'init', [ $this, 'init' ] );
 	}
 
@@ -53,21 +53,21 @@ class Joost_Blog_NurtureTags {
 	 */
 	public function register_settings() {
 		add_settings_section(
-			'nurture_tags_section',
-			__( 'Nurture tag settings', 'nurture-tags' ),
+			'less_tags_section',
+			__( 'Less tags settings', 'less-tags' ),
 			[ $this, 'display_section' ],
 			'reading'
 		);
 
 		add_settings_field(
-			'nurture_tags_min_tag_count',
-			__( 'Tags need to have', 'nurture-tags' ),
+			'less_tags_min_tag_count',
+			__( 'Tags need to have', 'less-tags' ),
 			[ $this, 'display_setting' ],
 			'reading',
-			'nurture_tags_section'
+			'less_tags_section'
 		);
 
-		register_setting( 'reading', 'nurture_tags_min_tag_count' );
+		register_setting( 'reading', 'less_tags_min_tag_count' );
 	}
 
 	/**
@@ -81,8 +81,8 @@ class Joost_Blog_NurtureTags {
 	 * Display the setting field in the Reading settings page.
 	 */
 	public function display_setting() {
-		echo '<input name="nurture_tags_min_tag_count" id="nurture_tags_min_tag_count" type="number" min="1" value="' . esc_attr( $this->min_tag_count ) . '" class="small-text" /> ';
-		esc_html_e( 'posts before being live on the site.', 'nurture-tags' );
+		echo '<input name="less_tags_min_tag_count" id="less_tags_min_tag_count" type="number" min="1" value="' . esc_attr( $this->min_tag_count ) . '" class="small-text" /> ';
+		esc_html_e( 'posts before being live on the site.', 'less-tags' );
 	}
 
 	/**
@@ -119,4 +119,4 @@ class Joost_Blog_NurtureTags {
 }
 
 // Instantiate the plugin class.
-new Joost_Blog_NurtureTags();
+new Joost_Blog_LessTags();

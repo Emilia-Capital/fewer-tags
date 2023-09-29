@@ -1,5 +1,5 @@
 {
-	"name": "joostdevalk/nurture-tags",
+	"name": "joostdevalk/less-tags",
 	"description": "Plugin that redirects tag pages to the home page if they contain fewer than a specified number of posts.",
 	"type": "wordpress-plugin",
 	"license": "GPL 3+",
