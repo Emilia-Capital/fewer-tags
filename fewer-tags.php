@@ -2,17 +2,17 @@
 /**
  * Plugin that redirects tag pages to the home page if they contain fewer than a specified number of posts.
  *
- * @package JoostLessTags
+ * @package JoostFewerTags
  * @version 1.0
  *
- * Plugin Name: Less Tags
- * Plugin URI: https://joost.blog/plugins/less-tags/
- * Description: Redirects tag pages to the home page if they contain fewer than a specified number of posts, defaults to 10. Change under Settings > Reading. Results in less tags, which is good for SEO.
+ * Plugin Name: Fewer Tags
+ * Plugin URI: https://joost.blog/plugins/fewer-tags/
+ * Description: Redirects tag pages to the home page if they contain fewer than a specified number of posts, defaults to 10. Change under Settings > Reading. Results in fewer useFewer tags, which is good for SEO.
  * Version: 1.0
  * Author: Joost de Valk
  * Author URI: https://joost.blog
  * License: GPL-3.0+
- * Text Domain: less-tags
+ * Text Domain: fewer-tags
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,9 +20,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * JoostLessTags Class
+ * JoostFewerTags Class
  */
-class JoostLessTags {
+class JoostFewerTags {
 
 	/**
 	 * Default value for the minimum number of posts a tag should have to not be redirected to the homepage.
@@ -58,18 +58,18 @@ class JoostLessTags {
 	 */
 	public function register_settings() {
 		add_settings_section(
-			'less_tags_section',
-			__( 'Less tags settings', 'less-tags' ),
+			'fewer_tags_section',
+			__( 'Fewer tags settings', 'fewer-tags' ),
 			[ $this, 'display_section' ],
 			'reading'
 		);
 
 		add_settings_field(
 			'joost_min_posts_count',
-			__( 'Tags need to have', 'less-tags' ),
+			__( 'Tags need to have', 'fewer-tags' ),
 			[ $this, 'display_setting' ],
 			'reading',
-			'less_tags_section'
+			'fewer_tags_section'
 		);
 
 		register_setting( 'reading', 'joost_min_posts_count' );
@@ -79,7 +79,7 @@ class JoostLessTags {
 	 * Display the section text.
 	 */
 	public function display_section() {
-		esc_html_e( 'Set the minimum number of posts a tag should have to become live on the site and not be redirected to the homepage.', 'less-tags' );
+		esc_html_e( 'Set the minimum number of posts a tag should have to become live on the site and not be redirected to the homepage.', 'fewer-tags' );
 	}
 
 	/**
@@ -87,11 +87,11 @@ class JoostLessTags {
 	 */
 	public function display_setting() {
 		echo '<input name="joost_min_posts_count" id="joost_min_posts_count" type="number" min="1" value="' . esc_attr( $this->min_posts_count ) . '" class="small-text" /> ';
-		esc_html_e( 'posts before being live on the site.', 'less-tags' );
+		esc_html_e( 'posts before being live on the site.', 'fewer-tags' );
 	}
 
 	/**
-	 * Redirect tag pages with less than the specified number of posts to the home page.
+	 * Redirect tag pages with fewer than the specified number of posts to the home page.
 	 */
 	public function redirect_tag_pages() {
 		if ( is_tag() ) {
@@ -154,7 +154,7 @@ class JoostLessTags {
 	 * @return array The modified array of columns.
 	 */
 	public function add_tag_columns( $columns ) {
-		$columns['active'] = __( 'Live on site', 'less-tags' );
+		$columns['active'] = __( 'Live on site', 'fewer-tags' );
 		return $columns;
 	}
 
@@ -170,9 +170,9 @@ class JoostLessTags {
 	public function manage_tag_columns( $out, $column_name, $tag_ID ) {
 		if ( $column_name === 'active' ) {
 			$term = get_term( $tag_ID );
-			$out  = __( 'Live', 'less-tags' );
+			$out  = __( 'Live', 'fewer-tags' );
 			if ( $term->count < $this->min_posts_count ) {
-				$out = '<span title="' . __( 'Not live due to not enough posts being in this tag.', 'less-tags' ) . '">' . __( 'Not live', 'less-tags' ) . '</span>';
+				$out = '<span title="' . __( 'Not live due to not enough posts being in this tag.', 'fewer-tags' ) . '">' . __( 'Not live', 'fewer-tags' ) . '</span>';
 			}
 		}
 
@@ -195,17 +195,25 @@ class JoostLessTags {
 		return $actions;
 	}
 
+	/**
+	 * Excludes tags with fewer than the minimum number of posts from the core sitemap.
+	 *
+	 * @param array  $args     The arguments for the sitemap query.
+	 * @param string $taxonomy The taxonomy for which the sitemap is being generated.
+	 *
+	 * @return array The modified arguments for the sitemap query.
+	 */
 	public function exclude_tags_from_core_sitemap( $args, $taxonomy ) {
 		if ( $taxonomy !== 'post_tag' ) {
 			return $args;
 		}
 
-		if( ! isset( $args['exclude'] ) ) {
+		if ( ! isset( $args['exclude'] ) ) {
 			$args['exclude'] = [];
 		}
 
 		// exclude terms with too few posts.
-		$args['exclude'] = array_merge( $args['exclude'], $this->get_tag_ids_with_less_than_min_posts() );
+		$args['exclude'] = array_merge( $args['exclude'], $this->get_tag_ids_with_fewer_than_min_posts() );
 		return $args;
 	}
 
@@ -214,10 +222,10 @@ class JoostLessTags {
 	 *
 	 * @return array List of term IDs that have fewer posts than the specified count.
 	 */
-	public function get_tag_ids_with_less_than_min_posts() {
+	public function get_tag_ids_with_fewer_than_min_posts() {
 		$args = [
-			'taxonomy' => 'post_tag',
-			'fields'   => 'ids',  // Only fetch term IDs.
+			'taxonomy'   => 'post_tag',
+			'fields'     => 'ids',  // Only fetch term IDs.
 			'hide_empty' => true, // Change to false if you want to include tags with zero posts.
 		];
 
@@ -270,4 +278,4 @@ class JoostLessTags {
 }
 
 // Instantiate the plugin class.
-new JoostLessTags();
+new JoostFewerTags();

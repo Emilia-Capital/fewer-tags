@@ -1,4 +1,4 @@
-=== Less Tags ===
+=== Fewer tags ===
 Contributors: joostdevalk
 Tags: tag, tags, seo
 Requires at least: 6.2
@@ -32,13 +32,13 @@ No, you should not noindex your tag pages. If your tag pages have more than 10 p
 
 === How can I report security bugs? ===
 
-You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/less-tags)
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/fewer-tags)
 
 == Installation ==
-1. Search for Less Tags on the repository
+1. Search for Fewer tags on the repository
 2. Install the plugin
 3. Optionally: go to Settings -> Reading and adjust the default minimum number of posts (the default is 10).
 4. You\'re done
 
 == Screenshots ==
-1. The Less Tags settings
+1. The Fewer tags settings
