@@ -3,12 +3,12 @@
  * Plugin that redirects tag pages to the home page if they contain fewer than a specified number of posts.
  *
  * @package JoostFewerTags
- * @version 1.0
+ * @version 1.0.1
  *
  * Plugin Name: Fewer Tags
  * Plugin URI: https://joost.blog/plugins/fewer-tags/
  * Description: Redirects tag pages to the home page if they contain fewer than a specified number of posts, defaults to 10. Change under Settings > Reading. Results in fewer useFewer tags, which is good for SEO.
- * Version: 1.0
+ * Version: 1.0.1
  * Author: Joost de Valk
  * Author URI: https://joost.blog
  * License: GPL-3.0+
