@@ -113,7 +113,7 @@ class JoostFewerTags {
 	public function filter_get_the_tags( $tags ) {
 		if ( is_array( $tags ) ) {
 			foreach ( $tags as $key => $tag ) {
-				if ( $tag->count < $$this->min_posts_count ) {
+				if ( $tag->count < $this->min_posts_count ) {
 					unset( $tags[ $key ] );
 				}
 			}
