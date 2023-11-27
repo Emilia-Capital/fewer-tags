@@ -5,14 +5,17 @@
  * @package JoostFewerTags
  * @version 1.0.1
  *
- * Plugin Name: Fewer Tags
- * Plugin URI: https://joost.blog/plugins/fewer-tags/
- * Description: Redirects tag pages to the home page if they contain fewer than a specified number of posts, defaults to 10. Change under Settings > Reading. Results in fewer useFewer tags, which is good for SEO.
- * Version: 1.0.1
- * Author: Joost de Valk
- * Author URI: https://joost.blog
- * License: GPL-3.0+
- * Text Domain: fewer-tags
+ * Plugin Name:       Fewer Tags
+ * Plugin URI:        https://joost.blog/plugins/fewer-tags/
+ * Description:       Redirects tag pages to the home page if they contain fewer than a specified number of posts, defaults to 10. Change under Settings > Reading. Results in fewer useFewer tags, which is good for SEO.
+ * Requires at least: 6.2
+ * Requires PHP:      7.4
+ * Version:           1.0.1
+ * Author:            Joost de Valk
+ * Author URI:        https://joost.blog
+ * License:           GPL-3.0+
+ * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
+ * Text Domain:       fewer-tags
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -170,9 +173,9 @@ class JoostFewerTags {
 	public function manage_tag_columns( $out, $column_name, $tag_ID ) {
 		if ( $column_name === 'active' ) {
 			$term = get_term( $tag_ID );
-			$out  = __( 'Live', 'fewer-tags' );
+			$out  = esc_html__( 'Live', 'fewer-tags' );
 			if ( $term->count < $this->min_posts_count ) {
-				$out = '<span title="' . __( 'Not live due to not enough posts being in this tag.', 'fewer-tags' ) . '">' . __( 'Not live', 'fewer-tags' ) . '</span>';
+				$out = '<span title="' . esc_html__( 'Not live due to not enough posts being in this tag.', 'fewer-tags' ) . '">' . esc_html__( 'Not live', 'fewer-tags' ) . '</span>';
 			}
 		}
 
