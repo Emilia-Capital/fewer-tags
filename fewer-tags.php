@@ -10,7 +10,7 @@
  * Description:       Redirects tag pages to the home page if they contain fewer than a specified number of posts, defaults to 10. Change under Settings > Reading. Results in fewer useFewer tags, which is good for SEO.
  * Requires at least: 6.2
  * Requires PHP:      7.4
- * Version:           1.0.1
+ * Version:           1.1
  * Author:            Joost de Valk
  * Author URI:        https://joost.blog
  * License:           GPL-3.0+
