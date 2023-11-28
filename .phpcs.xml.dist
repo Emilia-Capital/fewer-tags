@@ -147,6 +147,7 @@
 	</rule>
 	<rule ref="WordPress.Files.FileName">
 		<exclude-pattern>fewer-tags.php</exclude-pattern>
+		<exclude-pattern>fewer-tags-playground.php</exclude-pattern>
 	</rule>
 
 </ruleset>
