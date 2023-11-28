@@ -4,7 +4,7 @@ Tags: tag, tags, seo
 Requires at least: 6.2
 Tested up to: 6.3
 Requires PHP: 7.4
-Stable tag: 1.1
+Stable tag: 1.2
 License: GPL3+
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -45,9 +45,13 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
+= 1.2 =
+
+First release on WordPress.org.
+
 = 1.1 =
 
-Minor header and sanitization improvements, first release on WordPress.org.
+Minor header and sanitization improvements.
 
 = 1.0 =
 

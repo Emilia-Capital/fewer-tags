@@ -12,15 +12,9 @@
 /.gitignore export-ignore
 /.phpcs.xml export-ignore
 /.phpcs.xml.dist export-ignore
-/.travis.yml export-ignore
-/phpcs.xml export-ignore
-/phpcs.xml.dist export-ignore
-/phpunit.xml export-ignore
-/phpunit.xml.dist export-ignore
 /.cache export-ignore
-/svn-assets export-ignore
+/README.md export-ignore
 /tests export-ignore
-/.wordpress-org export-ignore
 
 #
 # Auto detect text files and perform LF normalization

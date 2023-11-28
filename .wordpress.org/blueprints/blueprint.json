@@ -1,17 +1,18 @@
 {
-    "landingPage": "\/wp-admin\/options-reading.php",
-    "preferredVersions": {
-        "php": "7.4",
-        "wp": "6.2"
-    },
-    "phpExtensionBundles": [
-        "kitchen-sink"
-    ],
-    "steps": [
-        {
-            "step": "login",
-            "username": "admin",
-            "password": "password"
-        }
-    ]
+	"landingPage": "\/wp-admin\/edit-tags.php?taxonomy=post_tag",
+	"preferredVersions": {
+		"php": "7.4",
+		"wp": "6.2"
+	},
+	"steps": [
+		{
+			"step": "login",
+			"username": "admin",
+			"password": "password"
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php\ninclude 'wordpress/wp-load.php';$common_tag = wp_insert_term( 'Common Tag', 'post_tag' );\n$special_tag = wp_insert_term( 'Special Tag', 'post_tag' );\n$post_ids = [];\nfor ( $i = 0; $i < 20; $i++ ) {\n$random_title = 'Random Post ' . wp_generate_password( 7, false );\n$postarr = [ 'post_title'  => $random_title, 'post_content' => 'This is a random post content.', 'post_status' => 'publish', 'post_type'  => 'post', 'tags_input' => [ $common_tag['term_id'] ] ];\n$post_ids[] = wp_insert_post( $postarr );\n}\n$selected_posts = array_rand( $post_ids, 5 );\nforeach ( $selected_posts as $post_id ) {\nwp_set_object_terms( $post_ids[$post_id], $special_tag['term_id'], 'post_tag', true );}"
+		}
+	]
 }
