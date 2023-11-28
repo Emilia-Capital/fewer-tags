@@ -41,7 +41,8 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 4. You\'re done
 
 == Screenshots ==
-1. The Fewer tags settings
+1. The Fewer tags settings on the Options -> Reading screen of the settings.
+2. Fewer Tags adds a column to the Tags overview page, showing which tags are live and which aren't.
 
 == Changelog ==
 
