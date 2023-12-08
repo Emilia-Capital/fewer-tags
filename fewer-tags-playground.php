@@ -10,13 +10,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class Joost_Fewer_Tags_Playground
+ * Class FewerTags_Playground
  */
-class Joost_Fewer_Tags_Playground {
+class FewerTags_Playground {
 	/**
 	 * Class instance.
 	 *
-	 * @var Joost_Fewer_Tags_Playground
+	 * @var FewerTags_Playground
 	 */
 	private static $instance = false;
 
@@ -51,7 +51,7 @@ class Joost_Fewer_Tags_Playground {
 	 */
 	public static function get_instance() {
 		if ( ! self::$instance ) {
-			self::$instance = new Joost_Fewer_Tags_Playground();
+			self::$instance = new FewerTags_Playground();
 		}
 
 		return self::$instance;
@@ -127,4 +127,4 @@ class Joost_Fewer_Tags_Playground {
 }
 
 // Usage.
-$joost_fewer_tags_playground = new Joost_Fewer_Tags_Playground();
+$fewertags_playground = new FewerTags_Playground();
