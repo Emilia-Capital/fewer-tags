@@ -5,6 +5,8 @@
  * @package FewerTags
  */
 
+use FewerTags\Admin;
+
 namespace FewerTags\Tests;
 
 /**
@@ -15,7 +17,7 @@ class Admin extends \WP_UnitTestCase {
 	/**
 	 * Instance of the class being tested.
 	 *
-	 * @var Admin
+	 * @var FewerTags\Admin
 	 */
 	private static $class_instance;
 
@@ -24,7 +26,7 @@ class Admin extends \WP_UnitTestCase {
 	 */
 	public static function set_up_before_class() {
 		parent::set_up_before_class();
-		self::$class_instance = new FewerTags\Admin();
+		self::$class_instance = new Admin();
 	}
 
 	/**
