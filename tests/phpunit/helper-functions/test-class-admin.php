@@ -28,9 +28,11 @@ class Admin extends WP_UnitTestCase {
 	/**
 	 * Tests class constructor.
 	 *
-	 * @covers Clicky_Admin::__construct
+	 * @covers Admin::register_hooks
 	 */
-	public function test___construct() {
+	public function test_register_hooks() {
+		self::$class_instance->register_hooks();
+
 		$this->assertSame( 10, has_action( 'admin_init', [ self::$class_instance, 'register_settings' ] ) );
 		$this->assertSame( 10, has_action( 'manage_edit-post_tag_columns', [ self::$class_instance, 'add_tag_columns' ] ) );
 		$this->assertSame( 10, has_action( 'manage_post_tag_custom_column', [ self::$class_instance, 'manage_tag_columns' ] ), 10, 3 );
