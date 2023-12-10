@@ -5,14 +5,14 @@
  * @package FewerTags
  */
 
-use FewerTags\Admin;
-
 namespace FewerTags\Tests;
+
+use FewerTags\Admin;
 
 /**
  * Sample test case.
  */
-class Admin extends \WP_UnitTestCase {
+class Admin_Test extends \WP_UnitTestCase {
 
 	/**
 	 * Instance of the class being tested.
