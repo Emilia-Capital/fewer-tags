@@ -18,6 +18,12 @@
 	<!-- Exclude the Node Modules directory. -->
 	<exclude-pattern>/node_modules/*</exclude-pattern>
 
+	<!-- Exclude the Coverage output directory. -->
+	<exclude-pattern>/coverage/*</exclude-pattern>
+
+	<!-- Exclude the tests bootstrap. -->
+	<exclude-pattern>/tests/bootstrap.php</exclude-pattern>
+
 	<!-- Exclude minified Javascript files. -->
 	<exclude-pattern>*.min.js</exclude-pattern>
 
