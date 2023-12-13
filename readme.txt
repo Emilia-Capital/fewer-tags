@@ -4,7 +4,7 @@ Tags: tag, tags, seo
 Requires at least: 6.2
 Tested up to: 6.4
 Requires PHP: 7.4
-Stable tag: 1.3
+Stable tag: 1.3.1
 License: GPL3+
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -45,6 +45,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 2. Fewer Tags adds a column to the Tags overview page, showing which tags are live and which aren't.
 
 == Changelog ==
+
+= 1.3.1 =
+
+* Fix fatal error caused by not loading the autoload file.
 
 = 1.3 =
 
