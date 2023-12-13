@@ -2,7 +2,7 @@
 /**
  * PHPUnit bootstrap file.
  *
- * @package Accessibility_Checker
+ * @package FewerTags
  */
 
 $_tests_dir = getenv( 'WP_TESTS_DIR' );
@@ -29,7 +29,7 @@ require_once "{$_tests_dir}/includes/functions.php";
  * Manually load the plugin being tested.
  */
 function _manually_load_plugin() {
-	require dirname( __DIR__ ) . '/accessibility-checker.php';
+	require dirname( __DIR__ ) . '/fewer-tags.php';
 }
 
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
