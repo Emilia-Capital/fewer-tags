@@ -31,7 +31,9 @@ class Frontend {
 			$tag = get_queried_object();
 			if ( $tag && $tag->count < \FewerTags::$min_posts_count ) {
 				wp_safe_redirect( home_url(), 301 );
+				// @codeCoverageIgnoreStart
 				exit;
+				// @codeCoverageIgnoreEnd
 			}
 		}
 	}
@@ -80,30 +82,6 @@ class Frontend {
 		}
 
 		return $tags;
-	}
-
-	/**
-	 * Filters the list of terms (including tags) retrieved to exclude tags with fewer than the specified minimum number of posts.
-	 *
-	 * @param array    $terms      The list of terms retrieved.
-	 * @param string[] $taxonomies The taxonomies for which terms were retrieved.
-	 *
-	 * @return array The filtered list of terms.
-	 */
-	public function filter_get_terms( $terms, $taxonomies ) {
-		if ( is_admin() ) {
-			return $terms;
-		}
-
-		if ( in_array( 'post_tag', $taxonomies, true ) && is_array( $terms ) ) {
-			foreach ( $terms as $key => $term ) {
-				if ( is_object( $term ) && $term->count < \FewerTags::$min_posts_count ) {
-					unset( $terms[ $key ] );
-				}
-			}
-		}
-
-		return $terms;
 	}
 
 	/**

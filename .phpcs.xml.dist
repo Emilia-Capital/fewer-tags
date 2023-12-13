@@ -18,6 +18,9 @@
 	<!-- Exclude the Node Modules directory. -->
 	<exclude-pattern>/node_modules/*</exclude-pattern>
 
+	<!-- Exclude the Coverage output directory. -->
+	<exclude-pattern>/coverage/*</exclude-pattern>
+
 	<!-- Exclude minified Javascript files. -->
 	<exclude-pattern>*.min.js</exclude-pattern>
 
@@ -106,6 +109,7 @@
 		<properties>
 			<property name="prefixes" type="array">
 				<element value="FewerTags"/>
+				<element value="fewer_tags"/>
 			</property>
 		</properties>
 	</rule>
@@ -142,12 +146,12 @@
 	For more information on ruleset configuration optiones, check out the PHPCS wiki:
 	https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-Ruleset
 	-->
-	<rule ref="WordPress.WP.GlobalVariablesOverride">
-		<exclude-pattern>/path/to/Tests/*Test\.php</exclude-pattern>
-	</rule>
 	<rule ref="WordPress.Files.FileName">
 		<exclude-pattern>fewer-tags.php</exclude-pattern>
 		<exclude-pattern>fewer-tags-playground.php</exclude-pattern>
 	</rule>
 
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<exclude-pattern>/tests/bootstrap\.php$</exclude-pattern>
+	</rule>
 </ruleset>

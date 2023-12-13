@@ -3,14 +3,14 @@
  * Plugin that redirects tag pages to the home page if they contain fewer than a specified number of posts.
  *
  * @package FewerTags
- * @version 1.3
+ * @version 1.3.1
  *
  * Plugin Name:       Fewer Tags
  * Plugin URI:        https://joost.blog/plugins/fewer-tags/
  * Description:       Redirects tag pages to the home page if they contain fewer than a specified number of posts, defaults to 10. Change under Settings > Reading. Results in fewer useFewer tags, which is good for SEO.
  * Requires at least: 6.2
  * Requires PHP:      7.4
- * Version:           1.3
+ * Version:           1.3.1
  * Author:            Joost de Valk
  * Author URI:        https://joost.blog
  * License:           GPL-3.0+
@@ -35,9 +35,9 @@ class FewerTags {
 	public static $min_posts_count;
 
 	/**
-	 * Constructor method
+	 * Register plugin hooks.
 	 */
-	public function __construct() {
+	public function register_hooks() {
 		add_action( 'init', [ $this, 'init' ] );
 	}
 
@@ -45,7 +45,7 @@ class FewerTags {
 	 * Initialize the plugin and register hooks.
 	 */
 	public function init() {
-		self::$min_posts_count = get_option( 'joost_min_posts_count', 10 );
+		self::$min_posts_count = (int) get_option( 'joost_min_posts_count', 10 );
 
 		require __DIR__ . '/vendor/autoload.php';
 
@@ -60,4 +60,5 @@ class FewerTags {
 }
 
 // Instantiate the plugin class.
-new FewerTags();
+$fewer_tags = new FewerTags();
+$fewer_tags->register_hooks();
