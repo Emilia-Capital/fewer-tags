@@ -15,6 +15,7 @@
 	<coverage>
     <include>
         <directory suffix=".php">src</directory>
+		<file>fewer-tags.php</file>
     </include>
   </coverage>
 </phpunit>

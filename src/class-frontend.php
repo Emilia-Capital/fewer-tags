@@ -31,7 +31,9 @@ class Frontend {
 			$tag = get_queried_object();
 			if ( $tag && $tag->count < \FewerTags::$min_posts_count ) {
 				wp_safe_redirect( home_url(), 301 );
+				// @codeCoverageIgnoreStart
 				exit;
+				// @codeCoverageIgnoreEnd
 			}
 		}
 	}

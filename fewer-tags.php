@@ -35,9 +35,9 @@ class FewerTags {
 	public static $min_posts_count;
 
 	/**
-	 * Constructor method
+	 * Register plugin hooks.
 	 */
-	public function __construct() {
+	public function register_hooks() {
 		add_action( 'init', [ $this, 'init' ] );
 	}
 
@@ -45,7 +45,7 @@ class FewerTags {
 	 * Initialize the plugin and register hooks.
 	 */
 	public function init() {
-		self::$min_posts_count = get_option( 'joost_min_posts_count', 10 );
+		self::$min_posts_count = (int) get_option( 'joost_min_posts_count', 10 );
 
 		require __DIR__ . '/vendor/autoload.php';
 
@@ -60,4 +60,5 @@ class FewerTags {
 }
 
 // Instantiate the plugin class.
-new FewerTags();
+$fewer_tags = new FewerTags();
+$fewer_tags->register_hooks();
