@@ -86,16 +86,21 @@ class Frontend_Test extends \WP_UnitTestCase {
 
 	/**
 	 * Add an exception to wp_redirect / wp_safe_redirect so we can test it.
+	 *
+	 * @param string $location The redirect location.
+	 * @param int    $status   The redirect status.
+	 *
+	 * @throws \Exception When redirects is being tried.
 	 */
 	public function filter_wp_redirect( $location, $status ) {
-		throw new \Exception( json_encode( 
+		throw new \Exception(
+			wp_json_encode(
 				[
 					'location' => $location,
 					'status'   => $status,
 				]
 			)
 		);
-		return false;
 	}
 
 	/**
@@ -120,10 +125,12 @@ class Frontend_Test extends \WP_UnitTestCase {
 	 */
 	public function test_redirect_tag_pages() {
 		$this->go_to( get_tag_link( self::$not_live_tag['term_id'] ) );
-	
+
 		// Set the global $wp_query object as a tag page with fewer posts than required.
-		$GLOBALS['wp_query']->is_tag         = true;
-		$GLOBALS['wp_query']->queried_object = (object) ['count' => 1]; // Assuming \FewerTags::$min_posts_count > 1
+		$GLOBALS['wp_query']->is_tag = true;
+
+		// Assuming \FewerTags::$min_posts_count > 1.
+		$GLOBALS['wp_query']->queried_object = (object) [ 'count' => 1 ];
 
 		try {
 			self::$class_instance->redirect_tag_pages();
@@ -134,10 +141,12 @@ class Frontend_Test extends \WP_UnitTestCase {
 		}
 
 		$this->go_to( get_tag_link( self::$live_tag['term_id'] ) );
-	
+
 		// Set the global $wp_query object as a tag page with fewer posts than required.
-		$GLOBALS['wp_query']->is_tag         = true;
-		$GLOBALS['wp_query']->queried_object = (object) ['count' => 11]; // Assuming \FewerTags::$min_posts_count > 1
+		$GLOBALS['wp_query']->is_tag = true;
+
+		// Assuming \FewerTags::$min_posts_count > 1.
+		$GLOBALS['wp_query']->queried_object = (object) [ 'count' => 11 ];
 
 		self::$class_instance->redirect_tag_pages();
 		$this->assertFalse( (bool) did_action( 'wp_redirect' ) );
@@ -151,7 +160,7 @@ class Frontend_Test extends \WP_UnitTestCase {
 	public function test_filter_get_the_terms() {
 		$live_tag     = get_term( self::$live_tag['term_id'], 'post_tag' );
 		$not_live_tag = get_term( self::$not_live_tag['term_id'], 'post_tag' );
-		
+
 		// Test when count is 5, and the post has both the live and the not live tag.
 		$terms = self::$class_instance->filter_get_the_terms( [ $live_tag, $not_live_tag ], self::$test_post, 'post_tag' );
 		$this->assertSame( [ $live_tag ], $terms );
