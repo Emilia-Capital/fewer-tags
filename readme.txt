@@ -2,9 +2,9 @@
 Contributors: joostdevalk
 Tags: tag, tags, seo
 Requires at least: 6.2
-Tested up to: 6.3
+Tested up to: 6.4
 Requires PHP: 7.4
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPL3+
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -45,6 +45,11 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 2. Fewer Tags adds a column to the Tags overview page, showing which tags are live and which aren't.
 
 == Changelog ==
+
+= 1.3 =
+
+* Make sure the output of the Gutenberg terms block is filtered to when it's showing tags.
+* Some minor optimizations to how the plugin is loaded to speed it up.
 
 = 1.2 =
 

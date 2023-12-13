@@ -4,8 +4,6 @@ on:
   push:
     tags:
       - "v*"
-  # Allow manually triggering the workflow.
-  workflow_dispatch:
 
 jobs:
   tag:
@@ -13,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@main
+      - name: Build
+        run: |
+          composer install --no-dev --no-interaction --no-progress --optimize-autoloader
       - name: WordPress Plugin Deploy
         uses: 10up/action-wordpress-plugin-deploy@stable
         env:
@@ -27,7 +28,7 @@ jobs:
         uses: actions/checkout@main
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: avakar/tag-and-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
