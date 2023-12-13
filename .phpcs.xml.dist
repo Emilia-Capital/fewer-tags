@@ -109,6 +109,7 @@
 		<properties>
 			<property name="prefixes" type="array">
 				<element value="FewerTags"/>
+				<element value="fewer_tags"/>
 			</property>
 		</properties>
 	</rule>
