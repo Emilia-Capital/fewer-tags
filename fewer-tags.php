@@ -47,11 +47,18 @@ class FewerTags {
 	public function init() {
 		self::$min_posts_count = (int) get_option( 'joost_min_posts_count', 10 );
 
-		require __DIR__ . '/vendor/autoload.php';
+		require plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
 
 		if ( is_admin() ) {
 			$admin = new FewerTags\Admin();
 			$admin->register_hooks();
+
+			// Detect if we're running on the playground, if so, load our playground specific class.
+			if ( php_sapi_name() === 'wasm' ) {
+				$playground = new FewerTags\Playground();
+				$playground->register_hooks();
+			}
+
 			return;
 		}
 		$frontend = new FewerTags\Frontend();

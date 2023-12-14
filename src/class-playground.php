@@ -2,29 +2,25 @@
 /**
  * File that creates a better playground environment for the Fewer Tags plugin.
  *
- * @package Fewer_Tags_Playground
+ * @package Fewer_Tags
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
+namespace FewerTags;
 
 /**
- * Class FewerTags_Playground
+ * Class Playground
  */
-class FewerTags_Playground {
-	/**
-	 * Class instance.
-	 *
-	 * @var FewerTags_Playground
-	 */
-	private static $instance = false;
+class Playground {
 
 	/**
-	 * Class constructor.
+	 * Register hooks.
 	 */
-	public function __construct() {
-		add_action( 'admin_notices', [ $this, 'admin_notices' ] );
+	public function register_hooks() {
+		if ( ! \get_option( 'fewer_tags_playground', false ) ) {
+			$this->generate_data();
+			\update_option( 'fewer_tags_playground', true );
+		}
+		\add_action( 'admin_notices', [ $this, 'admin_notices' ] );
 	}
 
 	/**
@@ -38,29 +34,18 @@ class FewerTags_Playground {
 
 		echo '<div id="fewer-tags-playground-notice" class="notice notice-success">';
 		echo '<p><strong>' . esc_html__( 'Fewer Tags demo', 'fewer-tags' ) . '</strong><br>';
-		esc_html_e( 'This is a demo of the Fewer Tags plugin. As you can see if you hover over them, tags that don\'t hit the required count, do not have a view action. That is because they are not live on the site.', 'fewer-tags' );
+		\esc_html_e( 'This is a demo of the Fewer Tags plugin. As you can see if you hover over them, tags that don\'t hit the required count, do not have a view action. That is because they are not live on the site.', 'fewer-tags' );
 		echo '</p>';
 		echo '<p>';
-		esc_html_e( 'You can go to Settings → Reading to change how many tags a tag needs to have to be live on the site.', 'fewer-tags' );
+		\esc_html_e( 'You can go to Settings → Reading to change how many tags a tag needs to have to be live on the site.', 'fewer-tags' );
 		echo '</p>';
 		echo '</div>';
 	}
 
 	/**
-	 * Get the instance of the class.
+	 * Generate random posts & terms.
 	 */
-	public static function get_instance() {
-		if ( ! self::$instance ) {
-			self::$instance = new FewerTags_Playground();
-		}
-
-		return self::$instance;
-	}
-
-	/**
-	 * Generate random posts.
-	 */
-	public function generate_posts() {
+	public function generate_data() {
 		$common_tag  = $this->create_tag( 'Common Tag' );
 		$special_tag = $this->create_tag( 'Special Tag' );
 
@@ -70,9 +55,9 @@ class FewerTags_Playground {
 		}
 
 		// Attach 'Special Tag' to 5 random posts.
-		$selected_posts = array_rand( $post_ids, 5 );
+		$selected_posts = \array_rand( $post_ids, 5 );
 		foreach ( $selected_posts as $post_id ) {
-			wp_set_object_terms( $post_ids[ $post_id ], $special_tag, 'post_tag', true );
+			\wp_set_object_terms( $post_ids[ $post_id ], $special_tag, 'post_tag', true );
 		}
 	}
 
@@ -91,7 +76,7 @@ class FewerTags_Playground {
 			'tags_input'   => [ $common_tag ],
 		];
 
-		return wp_insert_post( $postarr );
+		return \wp_insert_post( $postarr );
 	}
 
 	/**
@@ -102,8 +87,8 @@ class FewerTags_Playground {
 	 * @return string Tag name.
 	 */
 	private function create_tag( $tag_name ) {
-		if ( ! term_exists( $tag_name, 'post_tag' ) ) {
-			$term = wp_insert_term( $tag_name, 'post_tag' );
+		if ( ! \term_exists( $tag_name, 'post_tag' ) ) {
+			$term = \wp_insert_term( $tag_name, 'post_tag' );
 			return $term['term_id'];
 		}
 	}
@@ -117,14 +102,11 @@ class FewerTags_Playground {
 	 */
 	private function create_random_string( $length ) {
 		$words     = [ 'the', 'and', 'have', 'that', 'for', 'you', 'with', 'say', 'this', 'they', 'but', 'his', 'from', 'not', 'she', 'as', 'what', 'their', 'can', 'who', 'get', 'would', 'her', 'all', 'make', 'about', 'know', 'will', 'one', 'time', 'there', 'year', 'think', 'when', 'which', 'them', 'some', 'people', 'take', 'out', 'into', 'just', 'see', 'him', 'your', 'come', 'could', 'now', 'than', 'like', 'other', 'how', 'then', 'its', 'our', 'two', 'more', 'these', 'want', 'way', 'look', 'first', 'also', 'new', 'because', 'day', 'use', 'man', 'find', 'here', 'thing', 'give', 'many', 'well', 'only', 'those', 'tell', 'very', 'even', 'back', 'any', 'good', 'woman', 'through', 'life', 'child', 'work', 'down', 'may', 'after', 'should', 'call', 'world', 'over', 'school', 'still', 'try', 'last', 'ask', 'need' ];
-		$word_keys = array_rand( $words, $length );
+		$word_keys = \array_rand( $words, $length );
 		$sentence  = '';
 		foreach ( $word_keys as $key ) {
 			$sentence .= $words[ $key ] . ' ';
 		}
-		return ucfirst( trim( $sentence ) ) . '.';
+		return \ucfirst( \trim( $sentence ) ) . '.';
 	}
 }
-
-// Usage.
-$fewertags_playground = new FewerTags_Playground();
