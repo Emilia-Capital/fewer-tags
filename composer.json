@@ -18,8 +18,7 @@
 		"wp-coding-standards/wpcs": "^3.0",
 		"phpcompatibility/phpcompatibility-wp": "*",
 		"php-parallel-lint/php-parallel-lint": "^1.3",
-		"yoast/wp-test-utils": "^1.2",
-		"yoast/phpunit-polyfills": "^1.1"
+		"yoast/wp-test-utils": "^1.2"
 	},
 	"scripts": {
 		"check-cs": [
@@ -32,7 +31,7 @@
 			"@php ./vendor/php-parallel-lint/php-parallel-lint/parallel-lint . -e php --show-deprecated --exclude vendor --exclude node_modules --exclude .git"
 		],
 		"lint-blueprint": [
-			"@php -r \"exit( intval( is_null( json_decode( file_get_contents( './.wordpress.org/blueprints/blueprint.json' ) ) ) ) );\""
+			"@php -r \"exit( intval( is_null( json_decode( file_get_contents( './.wordpress-org/blueprints/blueprint.json' ) ) ) ) );\""
 		],
 		"test": [
             "@php ./vendor/phpunit/phpunit/phpunit"
