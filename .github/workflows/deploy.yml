@@ -1,10 +1,10 @@
-name: "Deploy to WordPress.org and create release on GitHub"
+name: "Deploy to WordPress.org"
 
-on: workflow_dispatch
-on:
+on: 
   push:
     tags:
       - "v*"
+  workflow_dispatch:
 
 jobs:
   tag:
