@@ -4,7 +4,7 @@ Tags: tag, tags, seo
 Requires at least: 6.2
 Tested up to: 6.4
 Requires PHP: 7.4
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 License: GPL3+
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -46,7 +46,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
-= 1.3.1 =
+= 1.3.2 =
 
 * Fix fatal error caused by not loading the autoload file.
 
