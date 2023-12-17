@@ -54,7 +54,7 @@ class FewerTags {
 			$admin->register_hooks();
 
 			// Detect if we're running on the playground, if so, load our playground specific class.
-			if ( php_sapi_name() === 'wasm' ) {
+			if ( defined( 'IS_PLAYGROUND_PREVIEW' ) && IS_PLAYGROUND_PREVIEW ) {
 				$playground = new FewerTags\Playground();
 				$playground->register_hooks();
 			}
