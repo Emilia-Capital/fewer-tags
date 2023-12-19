@@ -12,6 +12,30 @@ Tags that have fewer than the configured number of posts:
 
 This positively affects your site's SEO and also leads to less crawling, as you have fewer useless tag pages.
 
+## Installation
+
+To install, check out this repository and then run:
+
+```shell
+composer install
+```
+
+Or if you'd prefer a production build:
+
+```shell
+composer install --prefer-dist --optimize-autoloader --no-dev --no-scripts
+```
+
+The plugin currently doesn't require any JS or CSS to be built.
+
+### Development
+
+To test the Playground specific setup in development, add the following to your `wp-config.php`:
+
+```php
+define( 'IS_PLAYGROUND_PREVIEW', true );
+```
+
 ## Frequently Asked Questions
 
 ### Can I safely install this on an existing site?
