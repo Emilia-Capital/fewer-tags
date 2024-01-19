@@ -5,6 +5,7 @@
 # https://www.reddit.com/r/PHP/comments/2jzp6k/i_dont_need_your_tests_in_my_production
 # https://blog.madewithlove.be/post/gitattributes/
 #
+.distignore export-ignore
 /.editorconfig export-ignore
 /.eslintrc export-ignore
 /.github export-ignore
@@ -13,6 +14,9 @@
 /.phpcs.xml export-ignore
 /.phpcs.xml.dist export-ignore
 /.cache export-ignore
+composer.json export-ignore
+composer.lock export-ignore
+phpunit.xml.dist export-ignore
 /README.md export-ignore
 /tests export-ignore
 
