@@ -7,7 +7,7 @@
 
 namespace FewerTags\Tests;
 
-use FewerTags;
+use FewerTags\Plugin;
 use FewerTags\Admin;
 use FewerTags\Frontend;
 
@@ -30,13 +30,13 @@ class FewerTags_Test extends \WP_UnitTestCase {
 
 		update_option( 'joost_min_posts_count', 10 );
 
-		self::$class_instance = new FewerTags();
+		self::$class_instance = new Plugin();
 	}
 
 	/**
 	 * Tests hooks registration.
 	 *
-	 * @covers FewerTags::register_hooks
+	 * @covers FewerTags\Plugin::register_hooks
 	 */
 	public function test_register_hooks() {
 		self::$class_instance->register_hooks();
@@ -47,7 +47,7 @@ class FewerTags_Test extends \WP_UnitTestCase {
 	/**
 	 * Tests init method.
 	 *
-	 * @covers FewerTags::init
+	 * @covers FewerTags\Plugin::init
 	 */
 	public function test_init() {
 		self::$class_instance->init();
@@ -58,7 +58,7 @@ class FewerTags_Test extends \WP_UnitTestCase {
 	/**
 	 * Tests init method.
 	 *
-	 * @covers FewerTags::init
+	 * @covers FewerTags\Plugin::init
 	 */
 	public function test_init_admin() {
 		// Destroy the existing instance.
@@ -70,7 +70,7 @@ class FewerTags_Test extends \WP_UnitTestCase {
 
 		set_current_screen( 'dashboard' );
 
-		self::$class_instance = new FewerTags();
+		self::$class_instance = new Plugin();
 		self::$class_instance->init();
 
 		global $wp_filter;

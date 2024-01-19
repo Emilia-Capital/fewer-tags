@@ -7,7 +7,7 @@
 
 namespace FewerTags\Tests;
 
-use FewerTags;
+use FewerTags\Plugin;
 use FewerTags\Admin;
 
 /**
@@ -43,7 +43,7 @@ class Admin_Test extends \WP_UnitTestCase {
 		parent::set_up_before_class();
 		self::$class_instance = new Admin();
 
-		FewerTags::$min_posts_count = 5;
+		Plugin::$min_posts_count = 5;
 
 		self::$live_tag     = wp_insert_term( 'Live tag', 'post_tag' );
 		self::$not_live_tag = wp_insert_term( 'Not alive', 'post_tag' );
@@ -116,7 +116,7 @@ class Admin_Test extends \WP_UnitTestCase {
 		$this->assertStringContainsString( 'id="joost_min_posts_count"', $output );
 		$this->assertStringContainsString( 'type="number"', $output );
 		$this->assertStringContainsString( 'min="1"', $output );
-		$this->assertStringContainsString( 'value="5"', $output ); // This is tied to the value of FewerTags::$min_posts_count.
+		$this->assertStringContainsString( 'value="5"', $output ); // This is tied to the value of Plugin::$min_posts_count.
 		$this->assertStringContainsString( 'class="small-text"', $output );
 		$this->assertStringContainsString( 'posts before being live on the site.', $output );
 	}

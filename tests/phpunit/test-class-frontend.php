@@ -7,7 +7,7 @@
 
 namespace FewerTags\Tests;
 
-use FewerTags;
+use FewerTags\Plugin;
 use FewerTags\Frontend;
 
 /**
@@ -50,7 +50,7 @@ class Frontend_Test extends \WP_UnitTestCase {
 		parent::set_up_before_class();
 		self::$class_instance = new Frontend();
 
-		FewerTags::$min_posts_count = 5;
+		Plugin::$min_posts_count = 5;
 
 		self::$live_tag     = wp_insert_term( 'Live tag', 'post_tag' );
 		self::$not_live_tag = wp_insert_term( 'Not alive', 'post_tag' );
@@ -129,7 +129,7 @@ class Frontend_Test extends \WP_UnitTestCase {
 		// Set the global $wp_query object as a tag page with fewer posts than required.
 		$GLOBALS['wp_query']->is_tag = true;
 
-		// Assuming \FewerTags::$min_posts_count > 1.
+		// Assuming \FewerTags\Plugin::$min_posts_count > 1.
 		$GLOBALS['wp_query']->queried_object = (object) [ 'count' => 1 ];
 
 		try {
@@ -145,7 +145,7 @@ class Frontend_Test extends \WP_UnitTestCase {
 		// Set the global $wp_query object as a tag page with fewer posts than required.
 		$GLOBALS['wp_query']->is_tag = true;
 
-		// Assuming \FewerTags::$min_posts_count > 1.
+		// Assuming \FewerTags\Plugin::$min_posts_count > 1.
 		$GLOBALS['wp_query']->queried_object = (object) [ 'count' => 11 ];
 
 		self::$class_instance->redirect_tag_pages();
@@ -165,13 +165,13 @@ class Frontend_Test extends \WP_UnitTestCase {
 		$terms = self::$class_instance->filter_get_the_terms( [ $live_tag, $not_live_tag ], self::$test_post, 'post_tag' );
 		$this->assertSame( [ $live_tag ], $terms );
 
-		FewerTags::$min_posts_count = 1;
+		Plugin::$min_posts_count = 1;
 
 		// Test when count is 1, and the post has both the live and the not live tag (which has 1 post in it, so _is_ live now).
 		$terms = self::$class_instance->filter_get_the_terms( [ $live_tag, $not_live_tag ], self::$test_post, 'post_tag' );
 		$this->assertSame( [ $live_tag, $not_live_tag ], $terms );
 
-		FewerTags::$min_posts_count = 5;
+		Plugin::$min_posts_count = 5;
 
 		// Test with a taxonomy other than post_tag.
 		$terms = self::$class_instance->filter_get_the_terms( [ $live_tag, $not_live_tag ], self::$test_post, 'category' );
@@ -190,12 +190,12 @@ class Frontend_Test extends \WP_UnitTestCase {
 		$tags = self::$class_instance->filter_get_the_tags( [ $live_tag, $not_live_tag ] );
 		$this->assertSame( [ $live_tag ], $tags );
 
-		FewerTags::$min_posts_count = 1;
+		Plugin::$min_posts_count = 1;
 
 		$tags = self::$class_instance->filter_get_the_tags( [ $live_tag, $not_live_tag ] );
 		$this->assertSame( [ $live_tag, $not_live_tag ], $tags );
 
-		FewerTags::$min_posts_count = 5;
+		Plugin::$min_posts_count = 5;
 	}
 
 	/**
@@ -207,18 +207,18 @@ class Frontend_Test extends \WP_UnitTestCase {
 		$term_ids = self::$class_instance->exclude_tags_from_yoast_sitemap( [] );
 		$this->assertSame( [ self::$not_live_tag['term_id'] ], $term_ids );
 
-		FewerTags::$min_posts_count = 1;
+		Plugin::$min_posts_count = 1;
 
 		$term_ids = self::$class_instance->exclude_tags_from_yoast_sitemap( [] );
 		$this->assertSame( [], $term_ids );
 
-		FewerTags::$min_posts_count = 0;
+		Plugin::$min_posts_count = 0;
 
 		// Test when count = 0 we don't do anything with the input.
 		$term_ids = self::$class_instance->exclude_tags_from_yoast_sitemap( [ 'test' ] );
 		$this->assertSame( [ 'test' ], $term_ids );
 
-		FewerTags::$min_posts_count = 5;
+		Plugin::$min_posts_count = 5;
 	}
 
 	/**
@@ -231,7 +231,7 @@ class Frontend_Test extends \WP_UnitTestCase {
 		$terms = self::$class_instance->exclude_tags_from_core_sitemap( [], 'post_tag' );
 		$this->assertSame( [ 'exclude' => [ self::$not_live_tag['term_id'] ] ], $terms );
 
-		FewerTags::$min_posts_count = 1;
+		Plugin::$min_posts_count = 1;
 
 		$terms = self::$class_instance->exclude_tags_from_core_sitemap( [], 'post_tag' );
 		$this->assertSame( [ 'exclude' => [] ], $terms );
@@ -240,6 +240,6 @@ class Frontend_Test extends \WP_UnitTestCase {
 		$terms = self::$class_instance->exclude_tags_from_core_sitemap( [], 'category' );
 		$this->assertSame( [], $terms );
 
-		FewerTags::$min_posts_count = 5;
+		Plugin::$min_posts_count = 5;
 	}
 }
