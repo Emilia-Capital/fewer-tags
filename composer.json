@@ -9,11 +9,6 @@
 			"email": "joost@joost.blog"
 		}
 	],
-	"autoload": {
-		"classmap": [
-			"src/"
-		]
-	},
 	"require-dev": {
 		"wp-coding-standards/wpcs": "^3.0",
 		"phpcompatibility/phpcompatibility-wp": "*",
