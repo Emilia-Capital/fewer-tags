@@ -22,6 +22,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+define( 'FEWER_TAGS_DIR', __DIR__ );
+require_once __DIR__ . '/src/autoload.php';
+
 // Instantiate the plugin class.
 $fewer_tags = new FewerTags\Plugin();
 $fewer_tags->register_hooks();
