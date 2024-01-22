@@ -22,50 +22,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-/**
- * FewerTags Class
- */
-class FewerTags {
-
-	/**
-	 * Default value for the minimum number of posts a tag should have to not be redirected to the homepage.
-	 *
-	 * @var int
-	 */
-	public static $min_posts_count;
-
-	/**
-	 * Register plugin hooks.
-	 */
-	public function register_hooks() {
-		add_action( 'init', [ $this, 'init' ] );
-	}
-
-	/**
-	 * Initialize the plugin and register hooks.
-	 */
-	public function init() {
-		self::$min_posts_count = (int) get_option( 'joost_min_posts_count', 10 );
-
-		require plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
-
-		if ( is_admin() ) {
-			$admin = new FewerTags\Admin();
-			$admin->register_hooks();
-
-			// Detect if we're running on the playground, if so, load our playground specific class.
-			if ( defined( 'IS_PLAYGROUND_PREVIEW' ) && IS_PLAYGROUND_PREVIEW ) {
-				$playground = new FewerTags\Playground();
-				$playground->register_hooks();
-			}
-
-			return;
-		}
-		$frontend = new FewerTags\Frontend();
-		$frontend->register_hooks();
-	}
-}
+define( 'FEWER_TAGS_DIR', __DIR__ );
+require_once __DIR__ . '/src/autoload.php';
 
 // Instantiate the plugin class.
-$fewer_tags = new FewerTags();
+$fewer_tags = new FewerTags\Plugin();
 $fewer_tags->register_hooks();

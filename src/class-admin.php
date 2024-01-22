@@ -55,7 +55,7 @@ class Admin {
 	 * Display the setting field in the Reading settings page.
 	 */
 	public function display_setting() {
-		echo '<input name="joost_min_posts_count" id="joost_min_posts_count" type="number" min="1" value="' . esc_attr( \FewerTags::$min_posts_count ) . '" class="small-text" /> ';
+		echo '<input name="joost_min_posts_count" id="joost_min_posts_count" type="number" min="1" value="' . esc_attr( \FewerTags\Plugin::$min_posts_count ) . '" class="small-text" /> ';
 		esc_html_e( 'posts before being live on the site.', 'fewer-tags' );
 	}
 
@@ -84,7 +84,7 @@ class Admin {
 		if ( $column_name === 'active' ) {
 			$term = get_term( $tag_ID );
 			$out  = esc_html__( 'Live', 'fewer-tags' );
-			if ( $term->count < \FewerTags::$min_posts_count ) {
+			if ( $term->count < \FewerTags\Plugin::$min_posts_count ) {
 				$out = '<span title="' . esc_html__( 'Not live due to not enough posts being in this tag.', 'fewer-tags' ) . '">' . esc_html__( 'Not live', 'fewer-tags' ) . '</span>';
 			}
 		}
@@ -101,7 +101,7 @@ class Admin {
 	 * @return array Modified array of action links.
 	 */
 	public function remove_view_action( $actions, $tag ) {
-		if ( $tag->count < \FewerTags::$min_posts_count ) {
+		if ( $tag->count < \FewerTags\Plugin::$min_posts_count ) {
 			unset( $actions['view'] );
 		}
 

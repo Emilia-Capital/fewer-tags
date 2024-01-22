@@ -29,7 +29,7 @@ class Frontend {
 	public function redirect_tag_pages() {
 		if ( is_tag() ) {
 			$tag = get_queried_object();
-			if ( $tag && $tag->count < \FewerTags::$min_posts_count ) {
+			if ( $tag && $tag->count < \FewerTags\Plugin::$min_posts_count ) {
 				wp_safe_redirect( home_url(), 301 );
 				// @codeCoverageIgnoreStart
 				exit;
@@ -56,7 +56,7 @@ class Frontend {
 
 		if ( is_array( $terms ) ) {
 			foreach ( $terms as $key => $tag ) {
-				if ( $tag->count < \FewerTags::$min_posts_count ) {
+				if ( $tag->count < \FewerTags\Plugin::$min_posts_count ) {
 					unset( $terms[ $key ] );
 				}
 			}
@@ -75,7 +75,7 @@ class Frontend {
 	public function filter_get_the_tags( $tags ) {
 		if ( is_array( $tags ) ) {
 			foreach ( $tags as $key => $tag ) {
-				if ( $tag->count < \FewerTags::$min_posts_count ) {
+				if ( $tag->count < \FewerTags\Plugin::$min_posts_count ) {
 					unset( $tags[ $key ] );
 				}
 			}
@@ -126,7 +126,7 @@ class Frontend {
 			$tag_ids,
 			function ( $tag_id ) {
 				$tag = get_term( $tag_id, 'post_tag' );
-				return ( $tag->count < \FewerTags::$min_posts_count );
+				return ( $tag->count < \FewerTags\Plugin::$min_posts_count );
 			}
 		);
 		return $filtered_tag_ids;
@@ -140,7 +140,7 @@ class Frontend {
 	 * @return array Modified array of term IDs to exclude from the sitemap.
 	 */
 	public function exclude_tags_from_yoast_sitemap( $excluded_term_ids ) {
-		if ( \FewerTags::$min_posts_count === 0 ) {
+		if ( \FewerTags\Plugin::$min_posts_count === 0 ) {
 			return $excluded_term_ids;
 		}
 
@@ -156,7 +156,7 @@ class Frontend {
 		if ( ! is_wp_error( $tags ) ) {
 			foreach ( $tags as $tag_id ) {
 				$term = get_term( $tag_id );
-				if ( $term->count < \FewerTags::$min_posts_count ) {
+				if ( $term->count < \FewerTags\Plugin::$min_posts_count ) {
 					$excluded_term_ids[] = $tag_id;
 				}
 			}
