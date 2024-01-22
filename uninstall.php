@@ -10,9 +10,9 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	die;
 }
 
-$ft_option_name = 'joost_min_posts_count';
+$fewer_tags_option_name = 'joost_min_posts_count';
 
-delete_option( $ft_option_name );
+delete_option( $fewer_tags_option_name );
 
 // For site options in Multisite.
-delete_site_option( $ft_option_name );
+delete_site_option( $fewer_tags_option_name );
