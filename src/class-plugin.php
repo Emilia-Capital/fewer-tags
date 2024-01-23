@@ -30,6 +30,7 @@ class Plugin {
 	 * Register plugin hooks.
 	 */
 	public function register_hooks() {
+		add_action( 'plugins_loaded', [ $this, 'migrate_option' ] );
 		add_action( 'init', [ $this, 'init' ] );
 	}
 
@@ -53,5 +54,19 @@ class Plugin {
 		}
 		$frontend = new Frontend();
 		$frontend->register_hooks();
+	}
+
+	/**
+	 * Migrate the old option to the new one.
+	 *
+	 * @since 1.4.0
+	 * @return void
+	 */
+	public function migrate_option() {
+		$old_option = get_option( 'joost_min_posts_count' );
+		if ( $old_option ) {
+			update_option( static::$option_name, $old_option );
+			delete_option( 'joost_min_posts_count' );
+		}
 	}
 }
