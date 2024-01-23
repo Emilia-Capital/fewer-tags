@@ -17,7 +17,7 @@ class Plugin {
 	 *
 	 * @var string
 	 */
-	public static $option_name = 'joost_min_posts_count';
+	public static $option_name = 'fewer_tags';
 
 	/**
 	 * Default value for the minimum number of posts a tag should have to not be redirected to the homepage.
