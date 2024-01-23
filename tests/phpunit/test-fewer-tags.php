@@ -28,7 +28,7 @@ class FewerTags_Test extends \WP_UnitTestCase {
 	public static function set_up_before_class() {
 		parent::set_up_before_class();
 
-		update_option( 'joost_min_posts_count', 10 );
+		update_option( Plugin::$option_name, 10 );
 
 		self::$class_instance = new Plugin();
 	}

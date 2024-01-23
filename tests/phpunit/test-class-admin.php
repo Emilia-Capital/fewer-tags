@@ -86,7 +86,7 @@ class Admin_Test extends \WP_UnitTestCase {
 		global $wp_settings_sections, $wp_settings_fields;
 
 		$this->assertArrayHasKey( 'fewer_tags_section', $wp_settings_sections['reading'] );
-		$this->assertArrayHasKey( 'joost_min_posts_count', $wp_settings_fields['reading']['fewer_tags_section'] );
+		$this->assertArrayHasKey( Plugin::$option_name, $wp_settings_fields['reading']['fewer_tags_section'] );
 	}
 
 	/**
@@ -112,8 +112,8 @@ class Admin_Test extends \WP_UnitTestCase {
 		self::$class_instance->display_setting();
 		$output = ob_get_clean();
 
-		$this->assertStringContainsString( 'name="joost_min_posts_count"', $output );
-		$this->assertStringContainsString( 'id="joost_min_posts_count"', $output );
+		$this->assertStringContainsString( 'name="' . Plugin::$option_name . '"', $output );
+		$this->assertStringContainsString( 'id="' . Plugin::$option_name . '"', $output );
 		$this->assertStringContainsString( 'type="number"', $output );
 		$this->assertStringContainsString( 'min="1"', $output );
 		$this->assertStringContainsString( 'value="5"', $output ); // This is tied to the value of Plugin::$min_posts_count.

@@ -7,6 +7,8 @@
 
 namespace FewerTags;
 
+use FewerTags\Plugin;
+
 /**
  * FewerTags Admin Class
  */
@@ -34,14 +36,14 @@ class Admin {
 		);
 
 		add_settings_field(
-			'joost_min_posts_count',
+			Plugin::$option_name,
 			__( 'Tags need to have', 'fewer-tags' ),
 			[ $this, 'display_setting' ],
 			'reading',
 			'fewer_tags_section'
 		);
 
-		register_setting( 'reading', 'joost_min_posts_count' );
+		register_setting( 'reading', Plugin::$option_name );
 	}
 
 	/**
@@ -55,8 +57,17 @@ class Admin {
 	 * Display the setting field in the Reading settings page.
 	 */
 	public function display_setting() {
-		echo '<input name="joost_min_posts_count" id="joost_min_posts_count" type="number" min="1" value="' . esc_attr( \FewerTags\Plugin::$min_posts_count ) . '" class="small-text" /> ';
-		esc_html_e( 'posts before being live on the site.', 'fewer-tags' );
+		?>
+		<input
+			name="<?php echo esc_attr( Plugin::$option_name ); ?>"
+			id="<?php echo esc_attr( Plugin::$option_name ); ?>"
+			type="number"
+			min="1"
+			value="<?php echo esc_attr( Plugin::$min_posts_count ); ?>"
+			class="small-text"
+		/>
+		<?php esc_html_e( 'posts before being live on the site.', 'fewer-tags' ); ?>
+		<?php
 	}
 
 	/**

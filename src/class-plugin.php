@@ -13,6 +13,13 @@ namespace FewerTags;
 class Plugin {
 
 	/**
+	 * The option name.
+	 *
+	 * @var string
+	 */
+	public static $option_name = 'joost_min_posts_count';
+
+	/**
 	 * Default value for the minimum number of posts a tag should have to not be redirected to the homepage.
 	 *
 	 * @var int
@@ -30,7 +37,7 @@ class Plugin {
 	 * Initialize the plugin and register hooks.
 	 */
 	public function init() {
-		self::$min_posts_count = (int) get_option( 'joost_min_posts_count', 10 );
+		self::$min_posts_count = (int) get_option( static::$option_name, 10 );
 
 		if ( is_admin() ) {
 			$admin = new Admin();
