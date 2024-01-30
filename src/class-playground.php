@@ -37,7 +37,7 @@ class Playground {
 		\esc_html_e( 'This is a demo of the Fewer Tags plugin. As you can see if you hover over them, tags that don\'t hit the required count, do not have a view action. That is because they are not live on the site.', 'fewer-tags' );
 		echo '</p>';
 		echo '<p>';
-		\esc_html_e( 'You can go to Settings → Reading to change how many tags a tag needs to have to be live on the site.', 'fewer-tags' );
+		\esc_html_e( 'You can go to Settings → Reading to change how many posts a tag needs to have to be live on the site.', 'fewer-tags' );
 		echo '</p>';
 		echo '</div>';
 	}
