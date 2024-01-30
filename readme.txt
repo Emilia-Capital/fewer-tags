@@ -4,7 +4,7 @@ Tags: tag, tags, seo
 Requires at least: 6.2
 Tested up to: 6.4
 Requires PHP: 7.4
-Stable tag: 1.4
+Stable tag: 1.4.1
 License: GPL3+
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -61,6 +61,10 @@ Yes, that's why we created [Fewer Tags Pro](https://fewertags.com/)!
 3. Search engines agree with us, this is Fabrice Canel, Head of Bing, on LinkedIn.
 
 == Changelog ==
+
+= 1.4.1 =
+
+* Trigger rebuild because we broke the WordPress.org plugin build system.
 
 = 1.4 =
 
