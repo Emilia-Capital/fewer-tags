@@ -10,3 +10,5 @@
 .phpcs.xml.dist
 phpunit.xml.dist
 README.md
+composer.json
+composer.lock
