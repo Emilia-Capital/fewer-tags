@@ -11,25 +11,27 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 This plugin minimizes the effect of having too many tags by setting a minimum number of posts needed for a tag to be “live” on your site.
 
 == Description ==
-One of the most common SEO problems on WordPress sites is that people add too many tags to posts. The WordPress interface makes it incredibly easy to do so, and with every tag you add, you add another URL to your site for search engines to crawl and index. This plugin minimizes that effect by setting a minimum number of posts needed for a tag to be “live” on your site.
+One of the most common SEO problems on WordPress sites is that people add too many tags to posts. In fact, [our research shows](https://fewertags.com/research/) that _most_ WordPress sites use tags wrong. The WordPress interface makes it incredibly easy to do so, and with every tag you add, you add another URL to your site for search engines to crawl and index. This plugin minimizes that effect by setting a minimum number of posts needed for a tag to be “live” on your site.
+
+Fewer Tags Free solves this problem for you! It does that by simply not showing tags that have less than 10 posts in them to users and search engines.
 
 Tags that have less than the configured number of posts:
 
-* don't work on your site, and are redirected to your homepage.
-* no longer show up in tag listings.
-* are no longer linked in WordPress core's or Yoast SEO generated XML sitemaps.
+* Are hidden from visitors and search engines on your site, and are redirected to your homepage.
+* They don't show up in tag listings.
+* The are no longer linked in WordPress core's or Yoast SEO generated XML sitemaps.
 
 This positively affects your site's SEO and also leads to less crawling, as you have less useless tag pages.
 
-See this video to learn how to use Fewer Tags Free:
+See [this video](https://www.youtube.com/watch?v=KItn1X1qMas) if you want to learn how to use Fewer Tags Free.
 
 https://www.youtube.com/watch?v=KItn1X1qMas
 
-If you want to *truly* solve the tag problem on your site, consider the Fewer Tags Pro plugin & course. It'll help you fix the problems with tags on your site very quickly:
+If you want to *truly* solve the tag problem on your site, consider the [Fewer Tags Pro plugin & course](https://www.youtube.com/watch?v=NkF3Y6iIoDk). It'll help you fix the problems with tags on your site very quickly.
 
 https://www.youtube.com/watch?v=NkF3Y6iIoDk
 
-You can buy Fewer Tags Pro on [fewertags.com](https://fewertags.com/)!
+You can buy Fewer Tags Pro (or read more about it) on [fewertags.com](https://fewertags.com/)!
 
 == Frequently Asked Questions ==
 
@@ -61,6 +63,14 @@ Yes, that's why we created [Fewer Tags Pro](https://fewertags.com/)!
 3. Search engines agree with us, this is Fabrice Canel, Head of Bing, on LinkedIn.
 
 == Changelog ==
+
+= 1.4.2 Beta =
+
+* Improved banner for WP admin looks (removes rounded corners).
+* Improved copy of `readme.txt`.
+* Fixed a sentence and a capitalization issue.
+
+Props to [Slava Abakumov](https://ovirium.com/) for all of these suggested changes.
 
 = 1.4.1 =
 

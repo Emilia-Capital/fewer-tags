@@ -30,7 +30,7 @@ class Admin {
 	public function register_settings() {
 		add_settings_section(
 			'fewer_tags_section',
-			__( 'Fewer tags settings', 'fewer-tags' ),
+			__( 'Fewer Tags settings', 'fewer-tags' ),
 			[ $this, 'display_section' ],
 			'reading'
 		);
