@@ -12,7 +12,7 @@
  * Requires PHP:      7.4
  * Version:           1.3.3
  * Author:            Joost de Valk
- * Author URI:        https://joost.blog
+ * Author URI:        https://fewertags.com/
  * License:           GPL-3.0+
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain:       fewer-tags

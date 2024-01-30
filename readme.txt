@@ -1,4 +1,4 @@
-=== Fewer Tags ===
+=== Fewer Tags Free ===
 Contributors: joostdevalk
 Tags: tag, tags, seo
 Requires at least: 6.2
@@ -20,19 +20,33 @@ Tags that have less than the configured number of posts:
 
 This positively affects your site's SEO and also leads to less crawling, as you have less useless tag pages.
 
+See this video to learn how to use Fewer Tags Free:
+
+https://www.youtube.com/watch?v=KItn1X1qMas
+
+If you want to *truly* solve the tag problem on your site, consider the Fewer Tags Pro plugin & course. It'll help you fix the problems with tags on your site very quickly:
+
+https://www.youtube.com/watch?v=NkF3Y6iIoDk
+
+You can buy Fewer Tags Pro on [fewertags.com](https://fewertags.com/)!
+
 == Frequently Asked Questions ==
 
-=== Can I safely install this on an existing site? ===
+= Can I safely install this on an existing site? =
 
 So you have a site with a lot of tags that don't add any value? Yes, you can safely add this plugin. It will redirect the useless tag pages to your site's homepage.
 
-=== Should I also noindex my tag pages? ===
+= Should I also noindex my tag pages? =
 
 No, you should not noindex your tag pages. If your tag pages have more than 10 posts in them, they are valuable ways of getting your site crawled and of combining related content. There's no reason to noindex those pages at that point. What you could (and should) do is add descriptions to those tag pages.
 
-=== How can I report security bugs? ===
+= How can I report security bugs? =
 
 You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/fewer-tags)
+
+= Can you help me get rid of those tags entirely? =
+
+Yes, that's why we created [Fewer Tags Pro](https://fewertags.com/)!
 
 == Installation ==
 1. Search for Fewer Tags on the repository.
@@ -45,6 +59,13 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 2. Fewer Tags adds a column to the Tags overview page, showing which tags are live and which aren't.
 
 == Changelog ==
+
+= 1.4 =
+
+* Changed the option name from `joost_min_posts_count` to `fewer_tags` so it's more recognizable for people.
+* Added uninstall functionality that removes the setting from the database on uninstall of the plugin.
+* Simplified the autoloader, no longer requiring composer packages.
+* Added videos for Fewer Tags Free and Fewer Tags Pro to the readme.txt.
 
 = 1.3.3 =
 
