@@ -64,6 +64,14 @@ Yes, that's why we created [Fewer Tags Pro](https://fewertags.com/)!
 
 == Changelog ==
 
+= 1.4.2 Beta =
+
+* Improved banner for WP admin looks (removes rounded corners).
+* Improved copy of `readme.txt`.
+* Fixed a sentence and a capitalization issue.
+
+Props to [Slava Abakumov](https://ovirium.com/) for all of these suggested changes.
+
 = 1.4.1 =
 
 * Trigger rebuild because we broke the WordPress.org plugin build system.
