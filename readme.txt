@@ -2,7 +2,7 @@
 Contributors: joostdevalk
 Tags: tag, tags, seo
 Requires at least: 6.2
-Tested up to: 6.4
+Tested up to: 6.5
 Requires PHP: 7.4
 Stable tag: 1.4.1
 License: GPL3+
