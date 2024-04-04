@@ -14,6 +14,8 @@ class Playground {
 
 	/**
 	 * Register hooks.
+	 *
+	 * @return void
 	 */
 	public function register_hooks() {
 		if ( ! \get_option( 'fewer_tags_playground', false ) ) {
@@ -25,6 +27,8 @@ class Playground {
 
 	/**
 	 * Print an admin notice helping people.
+	 *
+	 * @return void
 	 */
 	public function admin_notices() {
 		$screen = \get_current_screen();
@@ -44,6 +48,8 @@ class Playground {
 
 	/**
 	 * Generate random posts & terms.
+	 *
+	 * @return void
 	 */
 	public function generate_data() {
 		$common_tag  = $this->create_tag( 'Common Tag' );
@@ -65,6 +71,7 @@ class Playground {
 	 * Create a random post.
 	 *
 	 * @param string $common_tag Tag to attach to all posts.
+	 *
 	 * @return int Post ID.
 	 */
 	private function create_random_post( $common_tag ) {
@@ -87,10 +94,12 @@ class Playground {
 	 * @return string Tag name.
 	 */
 	private function create_tag( $tag_name ) {
-		if ( ! \term_exists( $tag_name, 'post_tag' ) ) {
+		$term = \term_exists( $tag_name, 'post_tag' );
+		if ( null === $term ) {
 			$term = \wp_insert_term( $tag_name, 'post_tag' );
-			return $term['term_id'];
 		}
+
+		return $term['term_id'];
 	}
 
 	/**
