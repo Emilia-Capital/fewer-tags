@@ -16,6 +16,8 @@ class Admin {
 
 	/**
 	 * Register the needed hooks.
+	 *
+	 * @return void
 	 */
 	public function register_hooks() {
 		add_action( 'admin_init', [ $this, 'register_settings' ] );
@@ -26,6 +28,8 @@ class Admin {
 
 	/**
 	 * Register settings and add settings field to the Reading settings page.
+	 *
+	 * @return void
 	 */
 	public function register_settings() {
 		add_settings_section(
@@ -48,6 +52,8 @@ class Admin {
 
 	/**
 	 * Display the section text.
+	 *
+	 * @return void
 	 */
 	public function display_section() {
 		esc_html_e( 'Set the minimum number of posts a tag should have to become live on the site and not be redirected to the homepage.', 'fewer-tags' );
@@ -55,6 +61,8 @@ class Admin {
 
 	/**
 	 * Display the setting field in the Reading settings page.
+	 *
+	 * @return void
 	 */
 	public function display_setting() {
 		?>
@@ -63,7 +71,7 @@ class Admin {
 			id="<?php echo esc_attr( Plugin::$option_name ); ?>"
 			type="number"
 			min="1"
-			value="<?php echo esc_attr( Plugin::$min_posts_count ); ?>"
+			value="<?php echo (int) Plugin::$min_posts_count; ?>"
 			class="small-text"
 		/>
 		<?php esc_html_e( 'posts before being live on the site.', 'fewer-tags' ); ?>
@@ -106,8 +114,8 @@ class Admin {
 	/**
 	 * Removes the "View" action link for tags that have fewer than the minimum number of posts.
 	 *
-	 * @param array   $actions An array of action links.
-	 * @param WP_Term $tag     Current WP_Term object.
+	 * @param array    $actions An array of action links.
+	 * @param \WP_Term $tag     Current WP_Term object.
 	 *
 	 * @return array Modified array of action links.
 	 */

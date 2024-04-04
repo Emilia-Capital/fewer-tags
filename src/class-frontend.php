@@ -14,6 +14,8 @@ class Frontend {
 
 	/**
 	 * Register the needed hooks.
+	 *
+	 * @return void
 	 */
 	public function register_hooks() {
 		add_action( 'template_redirect', [ $this, 'redirect_tag_pages' ] );
@@ -25,6 +27,8 @@ class Frontend {
 
 	/**
 	 * Redirect tag pages with fewer than the specified number of posts to the home page.
+	 *
+	 * @return void
 	 */
 	public function redirect_tag_pages() {
 		if ( is_tag() ) {
@@ -43,9 +47,9 @@ class Frontend {
 	 *
 	 * Only works on post_tag taxonomy.
 	 *
-	 * @param WP_Term[]|WP_Error $terms    Array of attached terms, or WP_Error on failure.
-	 * @param int                $post_id  Post ID.
-	 * @param string             $taxonomy Name of the taxonomy.
+	 * @param \WP_Term[]|\WP_Error $terms    Array of attached terms, or WP_Error on failure.
+	 * @param int                  $post_id  Post ID.
+	 * @param string               $taxonomy Name of the taxonomy.
 	 *
 	 * @return array The filtered array of term objects.
 	 */

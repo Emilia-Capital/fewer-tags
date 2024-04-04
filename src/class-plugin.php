@@ -28,6 +28,8 @@ class Plugin {
 
 	/**
 	 * Register plugin hooks.
+	 *
+	 * @return void
 	 */
 	public function register_hooks() {
 		add_action( 'plugins_loaded', [ $this, 'migrate_option' ] );
@@ -36,6 +38,8 @@ class Plugin {
 
 	/**
 	 * Initialize the plugin and register hooks.
+	 *
+	 * @return void
 	 */
 	public function init() {
 		self::$min_posts_count = (int) get_option( static::$option_name, 10 );

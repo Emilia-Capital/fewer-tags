@@ -1,3 +1,5 @@
 /vendor/
 /coverage/
 .phpunit.result.cache
+
+._.DS_Store
