@@ -23,6 +23,7 @@ class Frontend {
 		add_filter( 'get_the_terms', [ $this, 'filter_get_the_terms' ], 10, 3 );
 		add_filter( 'wpseo_exclude_from_sitemap_by_term_ids', [ $this, 'exclude_tags_from_yoast_sitemap' ] );
 		add_filter( 'wp_sitemaps_taxonomies_query_args', [ $this, 'exclude_tags_from_core_sitemap' ], 10, 2 );
+		add_filter( 'slim_seo_taxonomy_query_args', [ $this, 'exclude_tags_from_slim_seo_sitemap' ] );
 	}
 
 	/**
@@ -101,6 +102,23 @@ class Frontend {
 			return $args;
 		}
 
+		if ( ! isset( $args['exclude'] ) ) {
+			$args['exclude'] = [];
+		}
+
+		// exclude terms with too few posts.
+		$args['exclude'] = array_merge( $args['exclude'], $this->get_tag_ids_with_fewer_than_min_posts() );
+		return $args;
+	}
+
+	/**
+	 * Excludes tags with fewer than the minimum number of posts from the Slim SEO sitemap.
+	 *
+	 * @param array $args The arguments for the sitemap query.
+	 *
+	 * @return array The modified arguments for the sitemap query.
+	 */
+	public function exclude_tags_from_slim_seo_sitemap( $args ) {
 		if ( ! isset( $args['exclude'] ) ) {
 			$args['exclude'] = [];
 		}
