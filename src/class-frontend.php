@@ -23,6 +23,7 @@ class Frontend {
 		\add_filter( 'get_the_terms', [ $this, 'filter_get_the_terms' ], 10, 3 );
 		\add_filter( 'wpseo_exclude_from_sitemap_by_term_ids', [ $this, 'exclude_tags_from_yoast_sitemap' ] );
 		\add_filter( 'wp_sitemaps_taxonomies_query_args', [ $this, 'exclude_tags_from_core_sitemap' ], 10, 2 );
+		\add_filter( 'slim_seo_taxonomy_query_args', [ $this, 'exclude_tags_from_slim_seo_sitemap' ] );
 	}
 
 	/**
@@ -111,6 +112,23 @@ class Frontend {
 	}
 
 	/**
+	 * Excludes tags with fewer than the minimum number of posts from the Slim SEO sitemap.
+	 *
+	 * @param array $args The arguments for the sitemap query.
+	 *
+	 * @return array The modified arguments for the sitemap query.
+	 */
+	public function exclude_tags_from_slim_seo_sitemap( $args ) {
+		if ( ! isset( $args['exclude'] ) ) {
+			$args['exclude'] = [];
+		}
+
+		// exclude terms with too few posts.
+		$args['exclude'] = \array_merge( $args['exclude'], $this->get_tag_ids_with_fewer_than_min_posts() );
+		return $args;
+	}
+
+	/**
 	 * Fetches the IDs of all tags with fewer than the given minimum post count.
 	 *
 	 * @return array List of term IDs that have fewer posts than the specified count.
@@ -123,13 +141,13 @@ class Frontend {
 		];
 
 		// Fetch all tag IDs.
-		$tag_ids = get_terms( $args );
+		$tag_ids = \get_terms( $args );
 
 		// Filter tag IDs based on post count.
-		$filtered_tag_ids = array_filter(
+		$filtered_tag_ids = \array_filter(
 			$tag_ids,
 			function ( $tag_id ) {
-				$tag = get_term( $tag_id, 'post_tag' );
+				$tag = \get_term( $tag_id, 'post_tag' );
 				return ( $tag->count < \FewerTags\Plugin::$min_posts_count );
 			}
 		);
@@ -157,9 +175,9 @@ class Frontend {
 
 		$tags = get_terms( $args );
 
-		if ( ! is_wp_error( $tags ) ) {
+		if ( ! \is_wp_error( $tags ) ) {
 			foreach ( $tags as $tag_id ) {
-				$term = get_term( $tag_id );
+				$term = \get_term( $tag_id );
 				if ( $term->count < \FewerTags\Plugin::$min_posts_count ) {
 					$excluded_term_ids[] = $tag_id;
 				}
