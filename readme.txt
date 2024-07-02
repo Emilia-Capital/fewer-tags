@@ -2,9 +2,9 @@
 Contributors: joostdevalk
 Tags: tag, tags, seo
 Requires at least: 6.2
-Tested up to: 6.5
+Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 1.4.1
+Stable tag: 1.5
 License: GPL3+
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -19,7 +19,7 @@ Tags that have less than the configured number of posts:
 
 * Are hidden from visitors and search engines on your site, and are redirected to your homepage.
 * They don't show up in tag listings.
-* The are no longer linked in WordPress core's or Yoast SEO generated XML sitemaps.
+* The are no longer linked in WordPress core's or Yoast SEO or Slim SEO generated XML sitemaps.
 
 This positively affects your site's SEO and also leads to less crawling, as you have less useless tag pages.
 
@@ -64,13 +64,19 @@ Yes, that's why we created [Fewer Tags Pro](https://fewertags.com/)!
 
 == Changelog ==
 
-= 1.4.2 Beta =
+= 1.5 =
 
-* Improved banner for WP admin looks (removes rounded corners).
-* Improved copy of `readme.txt`.
-* Fixed a sentence and a capitalization issue.
+Enhancements:
 
-Props to [Slava Abakumov](https://ovirium.com/) for all of these suggested changes.
+* Add support for Slim SEO, props [Anh Tran](https://profiles.wordpress.org/rilwis/).
+
+Bugfixes:
+
+* Reinstates the "View" action for other taxonomies than tags.
+
+Development:
+
+* Updated PHPCompatibility, added PHPStan and fixed all resulting issues.
 
 = 1.4.1 =
 
