@@ -23,7 +23,7 @@ class Admin {
 		\add_action( 'admin_init', [ $this, 'register_settings' ] );
 		\add_filter( 'manage_edit-post_tag_columns', [ $this, 'add_tag_columns' ] );
 		\add_filter( 'manage_post_tag_custom_column', [ $this, 'manage_tag_columns' ], 10, 3 );
-		\add_filter( 'tag_row_actions', [ $this, 'remove_view_action' ], 10, 2 );
+		\add_filter( 'post_tag_row_actions', [ $this, 'remove_view_action' ], 10, 2 );
 	}
 
 	/**
