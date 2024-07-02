@@ -18,11 +18,11 @@ class Frontend {
 	 * @return void
 	 */
 	public function register_hooks() {
-		add_action( 'template_redirect', [ $this, 'redirect_tag_pages' ] );
-		add_filter( 'get_the_tags', [ $this, 'filter_get_the_tags' ] );
-		add_filter( 'get_the_terms', [ $this, 'filter_get_the_terms' ], 10, 3 );
-		add_filter( 'wpseo_exclude_from_sitemap_by_term_ids', [ $this, 'exclude_tags_from_yoast_sitemap' ] );
-		add_filter( 'wp_sitemaps_taxonomies_query_args', [ $this, 'exclude_tags_from_core_sitemap' ], 10, 2 );
+		\add_action( 'template_redirect', [ $this, 'redirect_tag_pages' ] );
+		\add_filter( 'get_the_tags', [ $this, 'filter_get_the_tags' ] );
+		\add_filter( 'get_the_terms', [ $this, 'filter_get_the_terms' ], 10, 3 );
+		\add_filter( 'wpseo_exclude_from_sitemap_by_term_ids', [ $this, 'exclude_tags_from_yoast_sitemap' ] );
+		\add_filter( 'wp_sitemaps_taxonomies_query_args', [ $this, 'exclude_tags_from_core_sitemap' ], 10, 2 );
 	}
 
 	/**
@@ -31,10 +31,10 @@ class Frontend {
 	 * @return void
 	 */
 	public function redirect_tag_pages() {
-		if ( is_tag() ) {
-			$tag = get_queried_object();
+		if ( \is_tag() ) {
+			$tag = \get_queried_object();
 			if ( $tag && $tag->count < \FewerTags\Plugin::$min_posts_count ) {
-				wp_safe_redirect( home_url(), 301 );
+				\wp_safe_redirect( \home_url(), 301 );
 				// @codeCoverageIgnoreStart
 				exit;
 				// @codeCoverageIgnoreEnd
@@ -58,7 +58,7 @@ class Frontend {
 			return $terms;
 		}
 
-		if ( is_array( $terms ) ) {
+		if ( \is_array( $terms ) ) {
 			foreach ( $terms as $key => $tag ) {
 				if ( $tag->count < \FewerTags\Plugin::$min_posts_count ) {
 					unset( $terms[ $key ] );
@@ -77,7 +77,7 @@ class Frontend {
 	 * @return array The filtered array of tag objects.
 	 */
 	public function filter_get_the_tags( $tags ) {
-		if ( is_array( $tags ) ) {
+		if ( \is_array( $tags ) ) {
 			foreach ( $tags as $key => $tag ) {
 				if ( $tag->count < \FewerTags\Plugin::$min_posts_count ) {
 					unset( $tags[ $key ] );
@@ -106,7 +106,7 @@ class Frontend {
 		}
 
 		// exclude terms with too few posts.
-		$args['exclude'] = array_merge( $args['exclude'], $this->get_tag_ids_with_fewer_than_min_posts() );
+		$args['exclude'] = \array_merge( $args['exclude'], $this->get_tag_ids_with_fewer_than_min_posts() );
 		return $args;
 	}
 
