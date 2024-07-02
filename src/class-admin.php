@@ -20,10 +20,10 @@ class Admin {
 	 * @return void
 	 */
 	public function register_hooks() {
-		add_action( 'admin_init', [ $this, 'register_settings' ] );
-		add_filter( 'manage_edit-post_tag_columns', [ $this, 'add_tag_columns' ] );
-		add_filter( 'manage_post_tag_custom_column', [ $this, 'manage_tag_columns' ], 10, 3 );
-		add_filter( 'tag_row_actions', [ $this, 'remove_view_action' ], 10, 2 );
+		\add_action( 'admin_init', [ $this, 'register_settings' ] );
+		\add_filter( 'manage_edit-post_tag_columns', [ $this, 'add_tag_columns' ] );
+		\add_filter( 'manage_post_tag_custom_column', [ $this, 'manage_tag_columns' ], 10, 3 );
+		\add_filter( 'tag_row_actions', [ $this, 'remove_view_action' ], 10, 2 );
 	}
 
 	/**
@@ -32,14 +32,14 @@ class Admin {
 	 * @return void
 	 */
 	public function register_settings() {
-		add_settings_section(
+		\add_settings_section(
 			'fewer_tags_section',
 			__( 'Fewer Tags settings', 'fewer-tags' ),
 			[ $this, 'display_section' ],
 			'reading'
 		);
 
-		add_settings_field(
+		\add_settings_field(
 			Plugin::$option_name,
 			__( 'Tags need to have', 'fewer-tags' ),
 			[ $this, 'display_setting' ],
@@ -47,7 +47,7 @@ class Admin {
 			'fewer_tags_section'
 		);
 
-		register_setting( 'reading', Plugin::$option_name );
+		\register_setting( 'reading', Plugin::$option_name );
 	}
 
 	/**
@@ -56,7 +56,7 @@ class Admin {
 	 * @return void
 	 */
 	public function display_section() {
-		esc_html_e( 'Set the minimum number of posts a tag should have to become live on the site and not be redirected to the homepage.', 'fewer-tags' );
+		\esc_html_e( 'Set the minimum number of posts a tag should have to become live on the site and not be redirected to the homepage.', 'fewer-tags' );
 	}
 
 	/**
@@ -67,14 +67,14 @@ class Admin {
 	public function display_setting() {
 		?>
 		<input
-			name="<?php echo esc_attr( Plugin::$option_name ); ?>"
-			id="<?php echo esc_attr( Plugin::$option_name ); ?>"
+			name="<?php echo \esc_attr( Plugin::$option_name ); ?>"
+			id="<?php echo \esc_attr( Plugin::$option_name ); ?>"
 			type="number"
 			min="1"
 			value="<?php echo (int) Plugin::$min_posts_count; ?>"
 			class="small-text"
 		/>
-		<?php esc_html_e( 'posts before being live on the site.', 'fewer-tags' ); ?>
+		<?php \esc_html_e( 'posts before being live on the site.', 'fewer-tags' ); ?>
 		<?php
 	}
 
@@ -101,10 +101,10 @@ class Admin {
 	 */
 	public function manage_tag_columns( $out, $column_name, $tag_ID ) {
 		if ( $column_name === 'active' ) {
-			$term = get_term( $tag_ID );
-			$out  = esc_html__( 'Live', 'fewer-tags' );
+			$term = \get_term( $tag_ID );
+			$out  = \esc_html__( 'Live', 'fewer-tags' );
 			if ( $term->count < \FewerTags\Plugin::$min_posts_count ) {
-				$out = '<span title="' . esc_html__( 'Not live due to not enough posts being in this tag.', 'fewer-tags' ) . '">' . esc_html__( 'Not live', 'fewer-tags' ) . '</span>';
+				$out = '<span title="' . \esc_html__( 'Not live due to not enough posts being in this tag.', 'fewer-tags' ) . '">' . \esc_html__( 'Not live', 'fewer-tags' ) . '</span>';
 			}
 		}
 
