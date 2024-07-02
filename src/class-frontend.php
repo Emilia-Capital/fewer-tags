@@ -18,12 +18,12 @@ class Frontend {
 	 * @return void
 	 */
 	public function register_hooks() {
-		add_action( 'template_redirect', [ $this, 'redirect_tag_pages' ] );
-		add_filter( 'get_the_tags', [ $this, 'filter_get_the_tags' ] );
-		add_filter( 'get_the_terms', [ $this, 'filter_get_the_terms' ], 10, 3 );
-		add_filter( 'wpseo_exclude_from_sitemap_by_term_ids', [ $this, 'exclude_tags_from_yoast_sitemap' ] );
-		add_filter( 'wp_sitemaps_taxonomies_query_args', [ $this, 'exclude_tags_from_core_sitemap' ], 10, 2 );
-		add_filter( 'slim_seo_taxonomy_query_args', [ $this, 'exclude_tags_from_slim_seo_sitemap' ] );
+		\add_action( 'template_redirect', [ $this, 'redirect_tag_pages' ] );
+		\add_filter( 'get_the_tags', [ $this, 'filter_get_the_tags' ] );
+		\add_filter( 'get_the_terms', [ $this, 'filter_get_the_terms' ], 10, 3 );
+		\add_filter( 'wpseo_exclude_from_sitemap_by_term_ids', [ $this, 'exclude_tags_from_yoast_sitemap' ] );
+		\add_filter( 'wp_sitemaps_taxonomies_query_args', [ $this, 'exclude_tags_from_core_sitemap' ], 10, 2 );
+		\add_filter( 'slim_seo_taxonomy_query_args', [ $this, 'exclude_tags_from_slim_seo_sitemap' ] );
 	}
 
 	/**
@@ -32,10 +32,10 @@ class Frontend {
 	 * @return void
 	 */
 	public function redirect_tag_pages() {
-		if ( is_tag() ) {
-			$tag = get_queried_object();
+		if ( \is_tag() ) {
+			$tag = \get_queried_object();
 			if ( $tag && $tag->count < \FewerTags\Plugin::$min_posts_count ) {
-				wp_safe_redirect( home_url(), 301 );
+				\wp_safe_redirect( \home_url(), 301 );
 				// @codeCoverageIgnoreStart
 				exit;
 				// @codeCoverageIgnoreEnd
@@ -59,7 +59,7 @@ class Frontend {
 			return $terms;
 		}
 
-		if ( is_array( $terms ) ) {
+		if ( \is_array( $terms ) ) {
 			foreach ( $terms as $key => $tag ) {
 				if ( $tag->count < \FewerTags\Plugin::$min_posts_count ) {
 					unset( $terms[ $key ] );
@@ -78,7 +78,7 @@ class Frontend {
 	 * @return array The filtered array of tag objects.
 	 */
 	public function filter_get_the_tags( $tags ) {
-		if ( is_array( $tags ) ) {
+		if ( \is_array( $tags ) ) {
 			foreach ( $tags as $key => $tag ) {
 				if ( $tag->count < \FewerTags\Plugin::$min_posts_count ) {
 					unset( $tags[ $key ] );
@@ -107,7 +107,7 @@ class Frontend {
 		}
 
 		// exclude terms with too few posts.
-		$args['exclude'] = array_merge( $args['exclude'], $this->get_tag_ids_with_fewer_than_min_posts() );
+		$args['exclude'] = \array_merge( $args['exclude'], $this->get_tag_ids_with_fewer_than_min_posts() );
 		return $args;
 	}
 
@@ -124,7 +124,7 @@ class Frontend {
 		}
 
 		// exclude terms with too few posts.
-		$args['exclude'] = array_merge( $args['exclude'], $this->get_tag_ids_with_fewer_than_min_posts() );
+		$args['exclude'] = \array_merge( $args['exclude'], $this->get_tag_ids_with_fewer_than_min_posts() );
 		return $args;
 	}
 
@@ -141,13 +141,13 @@ class Frontend {
 		];
 
 		// Fetch all tag IDs.
-		$tag_ids = get_terms( $args );
+		$tag_ids = \get_terms( $args );
 
 		// Filter tag IDs based on post count.
-		$filtered_tag_ids = array_filter(
+		$filtered_tag_ids = \array_filter(
 			$tag_ids,
 			function ( $tag_id ) {
-				$tag = get_term( $tag_id, 'post_tag' );
+				$tag = \get_term( $tag_id, 'post_tag' );
 				return ( $tag->count < \FewerTags\Plugin::$min_posts_count );
 			}
 		);
@@ -175,9 +175,9 @@ class Frontend {
 
 		$tags = get_terms( $args );
 
-		if ( ! is_wp_error( $tags ) ) {
+		if ( ! \is_wp_error( $tags ) ) {
 			foreach ( $tags as $tag_id ) {
-				$term = get_term( $tag_id );
+				$term = \get_term( $tag_id );
 				if ( $term->count < \FewerTags\Plugin::$min_posts_count ) {
 					$excluded_term_ids[] = $tag_id;
 				}
