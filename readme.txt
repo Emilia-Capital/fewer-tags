@@ -76,7 +76,7 @@ Bugfixes:
 
 Development:
 
-* Updated PHPCompatibility, added PHPStan, 
+* Updated PHPCompatibility, added PHPStan and fixed all resulting issues.
 
 = 1.4.1 =
 
