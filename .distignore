@@ -12,3 +12,4 @@ phpunit.xml.dist
 README.md
 composer.json
 composer.lock
+phpstan.neon.dist
