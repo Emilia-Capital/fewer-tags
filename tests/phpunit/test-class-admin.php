@@ -72,7 +72,7 @@ class Admin_Test extends \WP_UnitTestCase {
 		$this->assertSame( 10, has_action( 'admin_init', [ self::$class_instance, 'register_settings' ] ) );
 		$this->assertSame( 10, has_action( 'manage_edit-post_tag_columns', [ self::$class_instance, 'add_tag_columns' ] ) );
 		$this->assertSame( 10, has_action( 'manage_post_tag_custom_column', [ self::$class_instance, 'manage_tag_columns' ] ), 10, 3 );
-		$this->assertSame( 10, has_action( 'tag_row_actions', [ self::$class_instance, 'remove_view_action' ] ), 10, 2 );
+		$this->assertSame( 10, has_action( 'post_tag_row_actions', [ self::$class_instance, 'remove_view_action' ] ), 10, 2 );
 	}
 
 	/**
