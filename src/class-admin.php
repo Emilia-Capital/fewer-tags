@@ -23,7 +23,7 @@ class Admin {
 		\add_action( 'admin_init', [ $this, 'register_settings' ] );
 		\add_filter( 'manage_edit-post_tag_columns', [ $this, 'add_tag_columns' ] );
 		\add_filter( 'manage_post_tag_custom_column', [ $this, 'manage_tag_columns' ], 10, 3 );
-		\add_filter( 'tag_row_actions', [ $this, 'remove_view_action' ], 10, 2 );
+		\add_filter( 'post_tag_row_actions', [ $this, 'remove_view_action' ], 10, 2 );
 	}
 
 	/**
@@ -115,12 +115,12 @@ class Admin {
 	 * Removes the "View" action link for tags that have fewer than the minimum number of posts.
 	 *
 	 * @param array    $actions An array of action links.
-	 * @param \WP_Term $term    Current WP_Term object.
+	 * @param \WP_Term $tag     Current WP_Term object.
 	 *
 	 * @return array Modified array of action links.
 	 */
-	public function remove_view_action( $actions, $term ) {
-		if ( $term->taxonomy === 'post_tag' && $term->count < \FewerTags\Plugin::$min_posts_count ) {
+	public function remove_view_action( $actions, $tag ) {
+		if ( $tag->count < \FewerTags\Plugin::$min_posts_count ) {
 			unset( $actions['view'] );
 		}
 
