@@ -115,12 +115,12 @@ class Admin {
 	 * Removes the "View" action link for tags that have fewer than the minimum number of posts.
 	 *
 	 * @param array    $actions An array of action links.
-	 * @param \WP_Term $tag     Current WP_Term object.
+	 * @param \WP_Term $term    Current WP_Term object.
 	 *
 	 * @return array Modified array of action links.
 	 */
-	public function remove_view_action( $actions, $tag ) {
-		if ( $tag->count < \FewerTags\Plugin::$min_posts_count ) {
+	public function remove_view_action( $actions, $term ) {
+		if ( $term->taxonomy === 'post_tag' && $term->count < \FewerTags\Plugin::$min_posts_count ) {
 			unset( $actions['view'] );
 		}
 
