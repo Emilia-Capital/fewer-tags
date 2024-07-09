@@ -67,7 +67,7 @@ class Frontend {
 			}
 		}
 
-		return $terms;
+		return array_values( $terms );
 	}
 
 	/**
