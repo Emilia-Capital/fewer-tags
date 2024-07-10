@@ -4,7 +4,7 @@ Tags: tag, tags, seo
 Requires at least: 6.2
 Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 1.5
+Stable tag: 1.5.1
 License: GPL3+
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -63,6 +63,10 @@ Yes, that's why we created [Fewer Tags Pro](https://fewertags.com/)!
 3. Search engines agree with us, this is Fabrice Canel, Head of Bing, on LinkedIn.
 
 == Changelog ==
+
+= 1.5.1 =
+
+* Fixes a case where the `keywords` output in the Yoast SEO schema might be of the wrong type.
 
 = 1.5 =
 
