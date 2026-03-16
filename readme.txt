@@ -1,5 +1,5 @@
 === Fewer Tags ===
-Contributors: joostdevalk
+Contributors: joostdevalk, aristath, filipi, progressplanner
 Tags: seo, tags, taxonomy, sitemap, archives
 Requires at least: 6.2
 Tested up to: 6.9
