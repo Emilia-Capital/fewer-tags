@@ -66,6 +66,13 @@ class Plugin {
 			\add_action( 'admin_footer', [ $this, 'output_modal' ] );
 			\add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 			\add_filter( 'tag_row_actions', [ $this, 'add_merge_action' ], 10, 2 );
+			\add_filter( 'category_row_actions', [ $this, 'add_merge_action' ], 10, 2 );
+
+			// Add merge action for custom taxonomies.
+			$taxonomies = \get_taxonomies( [ 'public' => true, '_builtin' => false ], 'names' );
+			foreach ( $taxonomies as $taxonomy ) {
+				\add_filter( "{$taxonomy}_row_actions", [ $this, 'add_merge_action' ], 10, 2 );
+			}
 
 			// Detect if we're running on the playground, if so, load our playground specific class.
 			if ( defined( 'IS_PLAYGROUND_PREVIEW' ) && IS_PLAYGROUND_PREVIEW ) {
@@ -225,7 +232,7 @@ class Plugin {
 			<form id="fewer-tags-merge-form">
 				<?php // translators: %1$s is the taxonomy of the terms we're merging. ?>
 				<h3><?php printf( \esc_html__( 'Merge %1$s', 'fewer-tags' ), \esc_html( strtolower( $taxonomy->labels->name ) ) ); ?></h3>
-				<div id="fewer-tags-note"><p><?php \esc_html_e( 'If you merge the Uncategorized category into another, we will add the posts to the other category and remove them from Uncategorized. Unfortunately, the Uncategorized category cannnot be deleted.', 'fewer-tags' ); ?></p></div>
+				<div id="fewer-tags-note"><p><?php \esc_html_e( 'If you merge the Uncategorized category into another, we will add the posts to the other category and remove them from Uncategorized. Unfortunately, the Uncategorized category cannot be deleted.', 'fewer-tags' ); ?></p></div>
 				<input type="hidden" name="nonce" id="fewer-tags-merge-terms-nonce" value="<?php echo \esc_attr( \wp_create_nonce( 'fewer_tags_merge_terms' ) ); ?>" />
 				<input type="hidden" name="source_id" id="fewer-tags-source-term-id" value="" />
 				<input type="hidden" name="source_taxonomy" id="fewer-tags-taxonomy" value="<?php echo \esc_attr( $screen->taxonomy ); ?>" />

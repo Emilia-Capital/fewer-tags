@@ -134,6 +134,11 @@ class Admin {
 	 * @return void
 	 */
 	public function redirect_tool_notice() {
+		$screen = \get_current_screen();
+		if ( ! \is_object( $screen ) || $screen->base !== 'edit-tags' ) {
+			return;
+		}
+
 		if ( Helper::determine_redirect_tool() !== false ) {
 			return;
 		}

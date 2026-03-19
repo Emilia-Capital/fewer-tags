@@ -101,11 +101,12 @@ class Redirects {
 	 * @return bool Whether the redirect was created successfully.
 	 */
 	public function create_redirection_redirect( $source_url, $target_url ) {
-		$redirection_group = $this->options->get( 'redirect_group' );
-		if ( ! empty( $redirection_group ) || ! is_int( $redirection_group ) ) {
+		$redirection_group = $this->options->get( 'redirection_group' );
+		if ( empty( $redirection_group ) || ! is_int( $redirection_group ) ) {
 			$response = $this->create_redirection_group();
 			if ( false !== $response ) {
-				$this->options->set( 'redirection_group', $response->get_id() );
+				$redirection_group = $response->get_id();
+				$this->options->set( 'redirection_group', $redirection_group );
 			}
 		}
 

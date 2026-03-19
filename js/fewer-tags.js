@@ -68,15 +68,19 @@ function fewerTagsDomReady( callback ) {
  * @param {Function}  callback The callback to run when the element is removed.
  */
 const fewerTagsObserveElementRemoval = ( elements, callback ) => {
+	const theList = document.getElementById( 'the-list' );
+	if ( ! theList ) {
+		return;
+	}
 	elements.forEach( ( element ) => {
-		let inDom = document.body.contains( element );
+		let inDom = theList.contains( element );
 		const observer = new MutationObserver( () => {
-			if ( ! document.body.contains( element ) && inDom ) {
+			if ( ! theList.contains( element ) && inDom ) {
 				inDom = false;
 				callback();
 			}
 		} );
-		observer.observe( document.body, { childList: true, subtree: true } );
+		observer.observe( theList, { childList: true, subtree: true } );
 	} );
 };
 
@@ -136,6 +140,7 @@ async function fewerTagsGetTaxonomies( currentTaxonomy ) {
 				selected: ( taxonomies[ key ].slug === currentTaxonomy ),
 				customProperties: {
 					post_type: taxonomies[ key ].types,
+					rest_base: taxonomies[ key ].rest_base,
 				},
 			} ) );
 
@@ -152,10 +157,11 @@ let FTterms = [];
  * Get all terms from the WordPress REST API.
  *
  * @param {string} taxonomy The taxonomy to get the terms for.
+ * @param {string} restBase Optional REST base for the taxonomy endpoint.
  *
  * @return {Promise} The promise of the terms.
  */
-async function fewerTagsGetAllTerms( taxonomy ) {
+async function fewerTagsGetAllTerms( taxonomy, restBase ) {
 	const retrievedTerms = [];
 	const perPage = 100; // Max allowed by WP REST API
 	let page = 1;
@@ -163,7 +169,9 @@ async function fewerTagsGetAllTerms( taxonomy ) {
 	const termsOutput = [];
 
 	let endpoint = '';
-	if ( taxonomy === 'post_tag' ) {
+	if ( restBase ) {
+		endpoint = `/wp-json/wp/v2/${ restBase }`;
+	} else if ( taxonomy === 'post_tag' ) {
 		endpoint = `/wp-json/wp/v2/tags`;
 	} else if ( taxonomy === 'category' ) {
 		endpoint = `/wp-json/wp/v2/categories`;
@@ -242,7 +250,7 @@ fewerTagsGetAllTerms( FTchoicesElement.dataset.taxonomy ).then( ( terms ) => {
 	FTterms = terms;
 	FTchoices = new Choices( FTchoicesElement, {
 		choices: FTterms,
-		allowHTML: true,
+		allowHTML: false,
 		position: 'bottom',
 		itemSelectText: '',
 		renderChoiceLimit: -1,
@@ -282,7 +290,7 @@ fewerTagsDomReady( () => {
 		FTtaxonomies = taxonomies;
 		new Choices( FTtaxonomyElement, {
 			choices: FTtaxonomies,
-			allowHTML: true,
+			allowHTML: false,
 			position: 'bottom',
 			itemSelectText: '',
 			renderChoiceLimit: -1,
@@ -312,10 +320,12 @@ fewerTagsDomReady( () => {
 
 	FTtaxonomyElement.addEventListener( 'change', ( event ) => {
 		const targetTaxonomy = event.target.value;
-		fewerTagsGetAllTerms( targetTaxonomy ).then( ( terms ) => {
+		const selectedTaxonomy = FTtaxonomies.find( ( t ) => t.value === targetTaxonomy );
+		const restBase = selectedTaxonomy && selectedTaxonomy.customProperties ? selectedTaxonomy.customProperties.rest_base : '';
+		fewerTagsGetAllTerms( targetTaxonomy, restBase ).then( ( terms ) => {
 			FTterms = terms;
 			FTchoices.setChoices( FTterms, 'value', 'label', true );
-			document.getElementById( 'fewer-tags-target-term-label' ).innerHTML = 'Target ' + targetTaxonomy;
+			document.getElementById( 'fewer-tags-target-term-label' ).textContent = 'Target ' + targetTaxonomy;
 			document.getElementById( 'fewer-tags-target-taxonomy-slug' ).value = targetTaxonomy;
 		} );
 	} );
