@@ -108,8 +108,19 @@ install_test_suite() {
 		# set up testing suite
 		mkdir -p $WP_TESTS_DIR
 		rm -rf $WP_TESTS_DIR/{includes,data}
-		svn export --ignore-externals https://develop.svn.wordpress.org/${WP_TESTS_TAG}/tests/phpunit/includes/ $WP_TESTS_DIR/includes
-		svn export --ignore-externals https://develop.svn.wordpress.org/${WP_TESTS_TAG}/tests/phpunit/data/ $WP_TESTS_DIR/data
+
+		# Use GitHub zip downloads instead of svn export.
+		local GITHUB_TAG=${WP_TESTS_TAG#tags/}
+		local GITHUB_TAG=${GITHUB_TAG#branches/}
+		download "https://github.com/WordPress/wordpress-develop/archive/refs/heads/${GITHUB_TAG}.zip" "$TMPDIR/wp-tests.zip"
+		if [ ! -s "$TMPDIR/wp-tests.zip" ]; then
+			download "https://github.com/WordPress/wordpress-develop/archive/refs/tags/${GITHUB_TAG}.zip" "$TMPDIR/wp-tests.zip"
+		fi
+		unzip -q -o "$TMPDIR/wp-tests.zip" -d "$TMPDIR/wp-tests"
+		local WP_TESTS_EXTRACTED_DIR=$(find "$TMPDIR/wp-tests" -maxdepth 1 -mindepth 1 -type d | head -1)
+		cp -r "${WP_TESTS_EXTRACTED_DIR}/tests/phpunit/includes" "$WP_TESTS_DIR/includes"
+		cp -r "${WP_TESTS_EXTRACTED_DIR}/tests/phpunit/data" "$WP_TESTS_DIR/data"
+		rm -rf "$TMPDIR/wp-tests" "$TMPDIR/wp-tests.zip"
 	fi
 
 	if [ ! -f wp-tests-config.php ]; then
