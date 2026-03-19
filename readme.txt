@@ -1,5 +1,5 @@
 === Fewer Tags Free ===
-Contributors: joostdevalk
+Contributors: progressplanner,aristath,joostdevalk
 Tags: tag, tags, seo
 Requires at least: 6.2
 Tested up to: 6.6
