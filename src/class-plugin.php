@@ -69,7 +69,13 @@ class Plugin {
 			\add_filter( 'category_row_actions', [ $this, 'add_merge_action' ], 10, 2 );
 
 			// Add merge action for custom taxonomies.
-			$taxonomies = \get_taxonomies( [ 'public' => true, '_builtin' => false ], 'names' );
+			$taxonomies = \get_taxonomies(
+				[
+					'public'   => true,
+					'_builtin' => false,
+				],
+				'names'
+			);
 			foreach ( $taxonomies as $taxonomy ) {
 				\add_filter( "{$taxonomy}_row_actions", [ $this, 'add_merge_action' ], 10, 2 );
 			}
