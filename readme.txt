@@ -1,8 +1,8 @@
 === Fewer Tags ===
 Contributors: progressplanner,aristath,joostdevalk
 Tags: tag, tags, seo
-Requires at least: 6.2
-Tested up to: 6.6
+Requires at least: 6.7
+Tested up to: 6.9
 Requires PHP: 7.4
 Stable tag: 2.0
 License: GPL3+

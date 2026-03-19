@@ -2,6 +2,8 @@
 [![Lint](https://github.com/jdevalk/fewer-tags/actions/workflows/lint.yml/badge.svg)](https://github.com/jdevalk/fewer-tags/actions/workflows/lint.yml)
 [![Security](https://github.com/Emilia-Capital/fewer-tags/actions/workflows/security.yml/badge.svg)](https://github.com/Emilia-Capital/fewer-tags/actions/workflows/security.yml)
 
+![Fewer Tags](/.wordpress-org/github_banner_fewer_tags_pp.png)
+
 # Fewer Tags
 One of the most common SEO problems on WordPress sites is that people add too many tags to posts. The WordPress interface makes it incredibly easy to do so, and with every tag you add, you add another URL to your site for search engines to crawl and index. This plugin minimizes that effect by setting a minimum number of posts needed for a tag to be “live” on your site.
 
