@@ -21,8 +21,8 @@
 	<!-- Exclude the Coverage output directory. -->
 	<exclude-pattern>/coverage/*</exclude-pattern>
 
-	<!-- Exclude minified Javascript files. -->
-	<exclude-pattern>*.min.js</exclude-pattern>
+	<!-- Exclude Javascript files. -->
+	<exclude-pattern>*.js</exclude-pattern>
 
 	<!-- Strip the filepaths down to the relevant bit. -->
 	<arg name="basepath" value="."/>

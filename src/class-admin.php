@@ -21,6 +21,7 @@ class Admin {
 	 */
 	public function register_hooks() {
 		\add_action( 'admin_init', [ $this, 'register_settings' ] );
+		\add_action( 'admin_notices', [ $this, 'redirect_tool_notice' ] );
 		\add_filter( 'manage_edit-post_tag_columns', [ $this, 'add_tag_columns' ] );
 		\add_filter( 'manage_post_tag_custom_column', [ $this, 'manage_tag_columns' ], 10, 3 );
 		\add_filter( 'post_tag_row_actions', [ $this, 'remove_view_action' ], 10, 2 );
@@ -125,5 +126,60 @@ class Admin {
 		}
 
 		return $actions;
+	}
+
+	/**
+	 * Display a notice if no redirect tool is available.
+	 *
+	 * @return void
+	 */
+	public function redirect_tool_notice() {
+		if ( Helper::determine_redirect_tool() !== false ) {
+			return;
+		}
+		?>
+		<div class="error">
+			<p>
+				<strong><?php \esc_html_e( 'Warning:', 'fewer-tags' ); ?></strong>
+				<?php \esc_html_e( 'Fewer Tags requires either the Redirection plugin by John Godley or the Yoast SEO Premium plugin to be installed and activated to be able to merge tags, categories and other terms.', 'fewer-tags' ); ?>
+			</p>
+			<p>
+			<?php
+			// Figure out if the Redirection plugin is installed.
+			$is_redirection_plugin_installed = isset( \get_plugins()['redirection/redirection.php'] );
+
+			// If the Redirection plugin is not installed, get the link to install it.
+			// If it is installed but not activated, show a link to activate it.
+			$redirection_button_url = $is_redirection_plugin_installed
+				? \wp_nonce_url(
+					\add_query_arg(
+						[
+							'action' => 'activate',
+							'plugin' => 'redirection/redirection.php',
+						],
+						\admin_url( 'plugins.php' )
+					),
+					'activate-plugin_redirection/redirection.php'
+				) : \wp_nonce_url(
+					\add_query_arg(
+						[
+							'action' => 'install-plugin',
+							'plugin' => 'redirection',
+						],
+						\admin_url( 'update.php' )
+					),
+					'install-plugin_redirection'
+				);
+			?>
+			<a class="button" style="margin: 0 10px 0 0;" href="<?php echo \esc_url( $redirection_button_url ); ?>">
+				<?php
+				echo $is_redirection_plugin_installed
+					? \esc_html__( 'Activate Redirection', 'fewer-tags' )
+					: \esc_html__( 'Install Redirection', 'fewer-tags' );
+				?>
+			</a>
+			<a href="https://yoast.com/wordpress/plugins/seo/"><?php \esc_html_e( 'Get Yoast SEO Premium', 'fewer-tags' ); ?></a></p>
+		</div>
+		<?php
 	}
 }

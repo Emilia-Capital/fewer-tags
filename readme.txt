@@ -1,37 +1,46 @@
-=== Fewer Tags Free ===
+=== Fewer Tags ===
 Contributors: progressplanner,aristath,joostdevalk
 Tags: tag, tags, seo
 Requires at least: 6.2
 Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 1.5.1
+Stable tag: 2.0
 License: GPL3+
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
-This plugin minimizes the effect of having too many tags by setting a minimum number of posts needed for a tag to be “live” on your site.
+Manage your site's tags: set minimum post counts, merge terms across taxonomies, and create redirects when deleting or merging terms.
 
 == Description ==
-One of the most common SEO problems on WordPress sites is that people add too many tags to posts. In fact, [our research shows](https://fewertags.com/research/) that _most_ WordPress sites use tags wrong. The WordPress interface makes it incredibly easy to do so, and with every tag you add, you add another URL to your site for search engines to crawl and index. This plugin minimizes that effect by setting a minimum number of posts needed for a tag to be “live” on your site.
+One of the most common SEO problems on WordPress sites is that people add too many tags to posts. In fact, [our research shows](https://fewertags.com/research/) that _most_ WordPress sites use tags wrong. The WordPress interface makes it incredibly easy to do so, and with every tag you add, you add another URL to your site for search engines to crawl and index.
 
-Fewer Tags Free solves this problem for you! It does that by simply not showing tags that have less than 10 posts in them to users and search engines.
+Fewer Tags solves this problem for you! It does that by:
 
-Tags that have less than the configured number of posts:
+**Minimum post count threshold**
+
+Tags that have less than the configured number of posts (default: 10):
 
 * Are hidden from visitors and search engines on your site, and are redirected to your homepage.
 * They don't show up in tag listings.
-* The are no longer linked in WordPress core's or Yoast SEO or Slim SEO generated XML sitemaps.
+* They are no longer linked in WordPress core's or Yoast SEO or Slim SEO generated XML sitemaps.
 
-This positively affects your site's SEO and also leads to less crawling, as you have less useless tag pages.
+**Merge terms**
 
-See [this video](https://www.youtube.com/watch?v=KItn1X1qMas) if you want to learn how to use Fewer Tags Free.
+* Merge any tag, category, or custom taxonomy term into another — even across taxonomies.
+* All posts from the source term are moved to the target term.
+* A 301 redirect is automatically created from the old term archive to the new one.
+
+**Redirect on delete**
+
+* When you delete a term, Fewer Tags prompts you to create a redirect to the homepage or any other URL.
+* Redirects are created via the [Redirection plugin](https://wordpress.org/plugins/redirection/) or Yoast SEO Premium.
+
+This positively affects your site's SEO and also leads to less crawling, as you have fewer useless tag pages.
+
+See [this video](https://www.youtube.com/watch?v=KItn1X1qMas) if you want to learn how to use Fewer Tags.
 
 https://www.youtube.com/watch?v=KItn1X1qMas
 
-If you want to *truly* solve the tag problem on your site, consider the [Fewer Tags Pro plugin & course](https://www.youtube.com/watch?v=NkF3Y6iIoDk). It'll help you fix the problems with tags on your site very quickly.
-
-https://www.youtube.com/watch?v=NkF3Y6iIoDk
-
-You can buy Fewer Tags Pro (or read more about it) on [fewertags.com](https://fewertags.com/)!
+You can learn more about Fewer Tags on [fewertags.com](https://fewertags.com/)!
 
 == Frequently Asked Questions ==
 
@@ -43,19 +52,20 @@ So you have a site with a lot of tags that don't add any value? Yes, you can saf
 
 No, you should not noindex your tag pages. If your tag pages have more than 10 posts in them, they are valuable ways of getting your site crawled and of combining related content. There's no reason to noindex those pages at that point. What you could (and should) do is add descriptions to those tag pages.
 
+= Do I need the Redirection plugin or Yoast SEO Premium? =
+
+For the merge and redirect-on-delete features to create actual redirects, you need either the [Redirection plugin](https://wordpress.org/plugins/redirection/) (free) or Yoast SEO Premium installed and activated. Without either plugin, merging and deleting will still work, but no redirects will be created.
+
 = How can I report security bugs? =
 
 You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/fewer-tags)
-
-= Can you help me get rid of those tags entirely? =
-
-Yes, that's why we created [Fewer Tags Pro](https://fewertags.com/)!
 
 == Installation ==
 1. Search for Fewer Tags on the repository.
 2. Install the plugin.
 3. Optionally: go to Settings → Reading and adjust the default minimum number of posts (the default is 10).
-4. You're done.
+4. For merge and redirect features, install and activate the [Redirection plugin](https://wordpress.org/plugins/redirection/) or Yoast SEO Premium.
+5. You're done.
 
 == Screenshots ==
 1. The Fewer Tags settings on the Settings → Reading screen.
@@ -63,6 +73,17 @@ Yes, that's why we created [Fewer Tags Pro](https://fewertags.com/)!
 3. Search engines agree with us, this is Fabrice Canel, Head of Bing, on LinkedIn.
 
 == Changelog ==
+
+= 2.0 =
+
+Major release: all Fewer Tags Pro functionality is now included in the free plugin.
+
+New features:
+
+* Merge terms — merge any tag, category, or custom taxonomy term into another, including cross-taxonomy merges.
+* Redirect on delete — when you delete a term, get prompted to create a redirect to the homepage or any other URL.
+* Redirect creation via Redirection plugin or Yoast SEO Premium.
+* Admin notice when neither Redirection nor Yoast SEO Premium is installed, with install/activate buttons.
 
 = 1.5.1 =
 
