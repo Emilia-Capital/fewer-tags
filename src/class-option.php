@@ -16,7 +16,7 @@ class Option {
 	 *
 	 * @var string
 	 */
-	private $option_name = 'fewer_tags_pro';
+	private $option_name = 'fewer_tags';
 
 	/**
 	 * Holds the plugin options.

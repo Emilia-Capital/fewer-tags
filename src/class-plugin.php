@@ -13,13 +13,6 @@ namespace FewerTags;
 class Plugin {
 
 	/**
-	 * The option name.
-	 *
-	 * @var string
-	 */
-	public static $option_name = 'fewer_tags';
-
-	/**
 	 * Default value for the minimum number of posts a tag should have to not be redirected to the homepage.
 	 *
 	 * @var int
@@ -49,7 +42,7 @@ class Plugin {
 	 * @return void
 	 */
 	public function init() {
-		self::$min_posts_count = (int) get_option( static::$option_name, 10 );
+		self::$min_posts_count = (int) ( Option::get_instance()->get( 'min_posts_count' ) ?? 10 );
 
 		if ( is_admin() ) {
 			if ( \wp_doing_ajax() ) {
@@ -99,10 +92,38 @@ class Plugin {
 	 * @return void
 	 */
 	public function migrate_option() {
-		$old_option = get_option( 'joost_min_posts_count' );
-		if ( $old_option ) {
-			update_option( static::$option_name, $old_option );
+		// 1. Legacy: joost_min_posts_count → min_posts_count key.
+		$legacy = get_option( 'joost_min_posts_count' );
+		if ( false !== $legacy ) {
+			$current = get_option( 'fewer_tags', [] );
+			if ( ! is_array( $current ) ) {
+				$current = [ 'min_posts_count' => (int) $current ];
+			}
+			if ( ! isset( $current['min_posts_count'] ) ) {
+				$current['min_posts_count'] = (int) $legacy;
+			}
+			update_option( 'fewer_tags', $current );
 			delete_option( 'joost_min_posts_count' );
+		}
+
+		// 2. Old free version: fewer_tags is a scalar integer.
+		$current = get_option( 'fewer_tags', [] );
+		if ( ! is_array( $current ) ) {
+			$current = [ 'min_posts_count' => (int) $current ];
+			update_option( 'fewer_tags', $current );
+		}
+
+		// 3. Old pro data: merge fewer_tags_pro into fewer_tags.
+		$pro = get_option( 'fewer_tags_pro' );
+		if ( false !== $pro && is_array( $pro ) ) {
+			$current = get_option( 'fewer_tags', [] );
+			if ( ! is_array( $current ) ) {
+				$current = [ 'min_posts_count' => (int) $current ];
+			}
+			// Merge pro data, existing keys in $current take precedence.
+			$current = array_merge( $pro, $current );
+			update_option( 'fewer_tags', $current );
+			delete_option( 'fewer_tags_pro' );
 		}
 	}
 

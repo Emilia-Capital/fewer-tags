@@ -7,8 +7,6 @@
 
 namespace FewerTags;
 
-use FewerTags\Plugin;
-
 /**
  * FewerTags Admin Class
  */
@@ -41,14 +39,21 @@ class Admin {
 		);
 
 		\add_settings_field(
-			Plugin::$option_name,
+			'fewer_tags_min_posts_count',
 			__( 'Tags need to have', 'fewer-tags' ),
 			[ $this, 'display_setting' ],
 			'reading',
 			'fewer_tags_section'
 		);
 
-		\register_setting( 'reading', Plugin::$option_name );
+		\register_setting(
+			'reading',
+			'fewer_tags',
+			[
+				'type'              => 'array',
+				'sanitize_callback' => [ $this, 'sanitize_setting' ],
+			]
+		);
 	}
 
 	/**
@@ -68,8 +73,8 @@ class Admin {
 	public function display_setting() {
 		?>
 		<input
-			name="<?php echo \esc_attr( Plugin::$option_name ); ?>"
-			id="<?php echo \esc_attr( Plugin::$option_name ); ?>"
+			name="fewer_tags[min_posts_count]"
+			id="fewer_tags_min_posts_count"
 			type="number"
 			min="1"
 			value="<?php echo (int) Plugin::$min_posts_count; ?>"
@@ -77,6 +82,32 @@ class Admin {
 		/>
 		<?php \esc_html_e( 'posts before being live on the site.', 'fewer-tags' ); ?>
 		<?php
+	}
+
+	/**
+	 * Sanitize the setting value.
+	 *
+	 * Receives the form submission for the fewer_tags option, updates only the
+	 * min_posts_count key, and preserves all other keys in the array.
+	 *
+	 * @param mixed $input The input value from the form.
+	 *
+	 * @return array The sanitized option array.
+	 */
+	public function sanitize_setting( $input ) {
+		$current = \get_option( 'fewer_tags', [] );
+		if ( ! is_array( $current ) ) {
+			$current = [];
+		}
+
+		$min_posts_count = isset( $input['min_posts_count'] ) ? (int) $input['min_posts_count'] : 10;
+		if ( $min_posts_count < 1 ) {
+			$min_posts_count = 1;
+		}
+
+		$current['min_posts_count'] = $min_posts_count;
+
+		return $current;
 	}
 
 	/**

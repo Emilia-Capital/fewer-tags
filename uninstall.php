@@ -13,6 +13,5 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 // Backwards-compatibility for older versions of the plugin.
 delete_option( 'joost_min_posts_count' );
 
-// Delete the options.
+// Delete the option.
 delete_option( 'fewer_tags' );
-delete_option( 'fewer_tags_pro' );
