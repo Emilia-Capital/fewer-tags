@@ -177,7 +177,13 @@ class Admin {
 		<div class="error">
 			<p>
 				<strong><?php \esc_html_e( 'Warning:', 'fewer-tags' ); ?></strong>
-				<?php \esc_html_e( 'Fewer Tags requires either the Redirection plugin by John Godley or the Yoast SEO Premium plugin to be installed and activated to be able to merge tags, categories and other terms.', 'fewer-tags' ); ?>
+				<?php
+				printf(
+					/* translators: %s: link to Redirection plugin */
+					\esc_html__( 'Fewer Tags requires either the %s plugin by John Godley or the Yoast SEO Premium plugin to be installed and activated to be able to merge tags, categories and other terms.', 'fewer-tags' ),
+					'<a href="https://wordpress.org/plugins/redirection/" target="_blank" rel="noopener noreferrer">Redirection</a>'
+				);
+				?>
 			</p>
 			<p>
 			<?php
@@ -214,7 +220,7 @@ class Admin {
 					: \esc_html__( 'Install Redirection', 'fewer-tags' );
 				?>
 			</a>
-			<a href="https://yoast.com/wordpress/plugins/seo/"><?php \esc_html_e( 'Get Yoast SEO Premium', 'fewer-tags' ); ?></a></p>
+			<a href="https://yoast.com/wordpress/plugins/seo/" target="_blank" rel="noopener noreferrer"><?php \esc_html_e( 'Get Yoast SEO Premium', 'fewer-tags' ); ?></a></p>
 		</div>
 		<?php
 	}
