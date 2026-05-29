@@ -50,9 +50,11 @@ class Admin_Ajax {
 		if ( ! is_array( $terms_to_redirect ) ) {
 			$terms_to_redirect = [];
 		}
+		// Use the permalink captured in pre_delete_term, since the term is already deleted at this point.
+		$permalink = $this->options->get( 'just_deleted_term_permalink' );
 		$terms_to_redirect[ $taxonomy ][ $deleted_term->slug ] = [
 			'object'    => $deleted_term,
-			'permalink' => \get_term_link( $deleted_term, $taxonomy ),
+			'permalink' => $permalink,
 		];
 		$this->options->set( 'terms_to_redirect', $terms_to_redirect );
 	}
@@ -68,6 +70,7 @@ class Admin_Ajax {
 	public function pre_delete_term( $term_id, $taxonomy ) {
 		$deleted_term = \get_term( $term_id, $taxonomy );
 		$this->options->set( 'just_deleted_term', $deleted_term );
+		$this->options->set( 'just_deleted_term_permalink', \get_term_link( $deleted_term, $taxonomy ) );
 	}
 
 	/**
@@ -77,6 +80,10 @@ class Admin_Ajax {
 	 */
 	public function get_just_deleted_term() {
 		\check_ajax_referer( 'fewer_tags_just_deleted_term' );
+
+		if ( ! \current_user_can( 'manage_categories' ) ) {
+			\wp_send_json_error( [ 'msg' => __( 'You do not have permission to do this.', 'fewer-tags' ) ] );
+		}
 
 		$just_deleted_term = $this->options->get( 'just_deleted_term' );
 		$msg               = Helper::redirect_term_notice( $just_deleted_term->slug, $just_deleted_term->name, $just_deleted_term->taxonomy );
@@ -91,6 +98,10 @@ class Admin_Ajax {
 	 */
 	public function dismiss_notice() {
 		\check_ajax_referer( 'fewer_tags_dismiss_notice' );
+
+		if ( ! \current_user_can( 'manage_categories' ) ) {
+			\wp_send_json_error( [ 'msg' => __( 'You do not have permission to do this.', 'fewer-tags' ) ] );
+		}
 
 		if ( ! isset( $_POST['id'] ) || ! isset( $_POST['taxonomy'] ) ) {
 			\wp_send_json_error( [ 'msg' => __( 'Invalid data.', 'fewer-tags' ) ] );
@@ -111,6 +122,10 @@ class Admin_Ajax {
 	 */
 	public function redirect_url_action() {
 		\check_ajax_referer( 'fewer_tags_redirect_url' );
+
+		if ( ! \current_user_can( 'manage_categories' ) ) {
+			\wp_send_json_error( [ 'msg' => __( 'You do not have permission to do this.', 'fewer-tags' ) ] );
+		}
 
 		if ( ! isset( $_POST['slug'] ) || ! isset( $_POST['target'] ) || ! isset( $_POST['taxonomy'] ) ) {
 			\wp_send_json_error(
@@ -134,7 +149,7 @@ class Admin_Ajax {
 			[
 				'slug' => $term->slug,
 				// translators: %1$s is the just redirected term name.
-				'msg'  => sprintf( __( 'Redirect for %1$s created!', 'fewer-tags' ), '<a href="' . $term_url . '">' . $term->name . '</a>' ),
+				'msg'  => sprintf( __( 'Redirect for %1$s created!', 'fewer-tags' ), '<a href="' . \esc_url( $term_url ) . '">' . \esc_html( $term->name ) . '</a>' ),
 			]
 		);
 	}
@@ -146,6 +161,10 @@ class Admin_Ajax {
 	 */
 	public function merge_terms() {
 		\check_ajax_referer( 'fewer_tags_merge_terms' );
+
+		if ( ! \current_user_can( 'manage_categories' ) ) {
+			\wp_send_json_error( [ 'msg' => __( 'You do not have permission to do this.', 'fewer-tags' ) ] );
+		}
 
 		if ( ! isset( $_POST['source_id'] ) || ! isset( $_POST['target_id'] ) || ! isset( $_POST['source_taxonomy'] ) || ! isset( $_POST['target_taxonomy'] ) ) {
 			\wp_send_json_error( [ 'msg' => __( 'Invalid data.', 'fewer-tags' ) ] );
@@ -180,10 +199,10 @@ class Admin_Ajax {
 		$target_term = \get_term( $target_term_id, $target_taxonomy );
 
 		// translators: %1$s is the source tag name, %2$s is the target tag name.
-		$msg = sprintf( \esc_html__( '%1$s merged into %2$s!', 'fewer-tags' ), '<strong>' . $source_term->name . '</strong>', '<strong>' . $target_term->name . '</strong>' );
+		$msg = sprintf( \esc_html__( '%1$s merged into %2$s!', 'fewer-tags' ), '<strong>' . \esc_html( $source_term->name ) . '</strong>', '<strong>' . \esc_html( $target_term->name ) . '</strong>' );
 		if ( $source_taxonomy !== $target_taxonomy ) {
 			// translators: %1$s is the source tag name, %2$s is the target tag name, %3$s is the source taxonomy, %4$s is the target taxonomy.
-			$msg = sprintf( \esc_html__( '%1$s (%3$s) merged into %2$s (%4$s)!', 'fewer-tags' ), '<strong>' . $source_term->name . '</strong>', '<strong>' . $target_term->name . '</strong>', $source_taxonomy, $target_taxonomy );
+			$msg = sprintf( \esc_html__( '%1$s (%3$s) merged into %2$s (%4$s)!', 'fewer-tags' ), '<strong>' . \esc_html( $source_term->name ) . '</strong>', '<strong>' . \esc_html( $target_term->name ) . '</strong>', \esc_html( $source_taxonomy ), \esc_html( $target_taxonomy ) );
 		}
 		\wp_send_json_success(
 			[

@@ -13,13 +13,6 @@ namespace FewerTags;
 class Plugin {
 
 	/**
-	 * The option name.
-	 *
-	 * @var string
-	 */
-	public static $option_name = 'fewer_tags';
-
-	/**
 	 * Default value for the minimum number of posts a tag should have to not be redirected to the homepage.
 	 *
 	 * @var int
@@ -49,7 +42,7 @@ class Plugin {
 	 * @return void
 	 */
 	public function init() {
-		self::$min_posts_count = (int) get_option( static::$option_name, 10 );
+		self::$min_posts_count = (int) ( Option::get_instance()->get( 'min_posts_count' ) ?? 10 );
 
 		if ( is_admin() ) {
 			if ( \wp_doing_ajax() ) {
@@ -66,6 +59,19 @@ class Plugin {
 			\add_action( 'admin_footer', [ $this, 'output_modal' ] );
 			\add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 			\add_filter( 'tag_row_actions', [ $this, 'add_merge_action' ], 10, 2 );
+			\add_filter( 'category_row_actions', [ $this, 'add_merge_action' ], 10, 2 );
+
+			// Add merge action for custom taxonomies.
+			$taxonomies = \get_taxonomies(
+				[
+					'public'   => true,
+					'_builtin' => false,
+				],
+				'names'
+			);
+			foreach ( $taxonomies as $taxonomy ) {
+				\add_filter( "{$taxonomy}_row_actions", [ $this, 'add_merge_action' ], 10, 2 );
+			}
 
 			// Detect if we're running on the playground, if so, load our playground specific class.
 			if ( defined( 'IS_PLAYGROUND_PREVIEW' ) && IS_PLAYGROUND_PREVIEW ) {
@@ -86,10 +92,38 @@ class Plugin {
 	 * @return void
 	 */
 	public function migrate_option() {
-		$old_option = get_option( 'joost_min_posts_count' );
-		if ( $old_option ) {
-			update_option( static::$option_name, $old_option );
+		// 1. Legacy: joost_min_posts_count → min_posts_count key.
+		$legacy = get_option( 'joost_min_posts_count' );
+		if ( false !== $legacy ) {
+			$current = get_option( 'fewer_tags', [] );
+			if ( ! is_array( $current ) ) {
+				$current = [ 'min_posts_count' => (int) $current ];
+			}
+			if ( ! isset( $current['min_posts_count'] ) ) {
+				$current['min_posts_count'] = (int) $legacy;
+			}
+			update_option( 'fewer_tags', $current );
 			delete_option( 'joost_min_posts_count' );
+		}
+
+		// 2. Old free version: fewer_tags is a scalar integer.
+		$current = get_option( 'fewer_tags', [] );
+		if ( ! is_array( $current ) ) {
+			$current = [ 'min_posts_count' => (int) $current ];
+			update_option( 'fewer_tags', $current );
+		}
+
+		// 3. Old pro data: merge fewer_tags_pro into fewer_tags.
+		$pro = get_option( 'fewer_tags_pro' );
+		if ( false !== $pro && is_array( $pro ) ) {
+			$current = get_option( 'fewer_tags', [] );
+			if ( ! is_array( $current ) ) {
+				$current = [ 'min_posts_count' => (int) $current ];
+			}
+			// Merge pro data, existing keys in $current take precedence.
+			$current = array_merge( $pro, $current );
+			update_option( 'fewer_tags', $current );
+			delete_option( 'fewer_tags_pro' );
 		}
 	}
 
@@ -225,7 +259,7 @@ class Plugin {
 			<form id="fewer-tags-merge-form">
 				<?php // translators: %1$s is the taxonomy of the terms we're merging. ?>
 				<h3><?php printf( \esc_html__( 'Merge %1$s', 'fewer-tags' ), \esc_html( strtolower( $taxonomy->labels->name ) ) ); ?></h3>
-				<div id="fewer-tags-note"><p><?php \esc_html_e( 'If you merge the Uncategorized category into another, we will add the posts to the other category and remove them from Uncategorized. Unfortunately, the Uncategorized category cannnot be deleted.', 'fewer-tags' ); ?></p></div>
+				<div id="fewer-tags-note"><p><?php \esc_html_e( 'If you merge the Uncategorized category into another, we will add the posts to the other category and remove them from Uncategorized. Unfortunately, the Uncategorized category cannot be deleted.', 'fewer-tags' ); ?></p></div>
 				<input type="hidden" name="nonce" id="fewer-tags-merge-terms-nonce" value="<?php echo \esc_attr( \wp_create_nonce( 'fewer_tags_merge_terms' ) ); ?>" />
 				<input type="hidden" name="source_id" id="fewer-tags-source-term-id" value="" />
 				<input type="hidden" name="source_taxonomy" id="fewer-tags-taxonomy" value="<?php echo \esc_attr( $screen->taxonomy ); ?>" />

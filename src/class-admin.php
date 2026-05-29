@@ -7,8 +7,6 @@
 
 namespace FewerTags;
 
-use FewerTags\Plugin;
-
 /**
  * FewerTags Admin Class
  */
@@ -41,14 +39,21 @@ class Admin {
 		);
 
 		\add_settings_field(
-			Plugin::$option_name,
+			'fewer_tags_min_posts_count',
 			__( 'Tags need to have', 'fewer-tags' ),
 			[ $this, 'display_setting' ],
 			'reading',
 			'fewer_tags_section'
 		);
 
-		\register_setting( 'reading', Plugin::$option_name );
+		\register_setting(
+			'reading',
+			'fewer_tags',
+			[
+				'type'              => 'array',
+				'sanitize_callback' => [ $this, 'sanitize_setting' ],
+			]
+		);
 	}
 
 	/**
@@ -68,8 +73,8 @@ class Admin {
 	public function display_setting() {
 		?>
 		<input
-			name="<?php echo \esc_attr( Plugin::$option_name ); ?>"
-			id="<?php echo \esc_attr( Plugin::$option_name ); ?>"
+			name="fewer_tags[min_posts_count]"
+			id="fewer_tags_min_posts_count"
 			type="number"
 			min="1"
 			value="<?php echo (int) Plugin::$min_posts_count; ?>"
@@ -77,6 +82,32 @@ class Admin {
 		/>
 		<?php \esc_html_e( 'posts before being live on the site.', 'fewer-tags' ); ?>
 		<?php
+	}
+
+	/**
+	 * Sanitize the setting value.
+	 *
+	 * Receives the form submission for the fewer_tags option, updates only the
+	 * min_posts_count key, and preserves all other keys in the array.
+	 *
+	 * @param mixed $input The input value from the form.
+	 *
+	 * @return array The sanitized option array.
+	 */
+	public function sanitize_setting( $input ) {
+		$current = \get_option( 'fewer_tags', [] );
+		if ( ! is_array( $current ) ) {
+			$current = [];
+		}
+
+		$min_posts_count = isset( $input['min_posts_count'] ) ? (int) $input['min_posts_count'] : 10;
+		if ( $min_posts_count < 1 ) {
+			$min_posts_count = 1;
+		}
+
+		$current['min_posts_count'] = $min_posts_count;
+
+		return $current;
 	}
 
 	/**
@@ -134,6 +165,11 @@ class Admin {
 	 * @return void
 	 */
 	public function redirect_tool_notice() {
+		$screen = \get_current_screen();
+		if ( ! \is_object( $screen ) || $screen->base !== 'edit-tags' ) {
+			return;
+		}
+
 		if ( Helper::determine_redirect_tool() !== false ) {
 			return;
 		}
@@ -141,7 +177,13 @@ class Admin {
 		<div class="error">
 			<p>
 				<strong><?php \esc_html_e( 'Warning:', 'fewer-tags' ); ?></strong>
-				<?php \esc_html_e( 'Fewer Tags requires either the Redirection plugin by John Godley or the Yoast SEO Premium plugin to be installed and activated to be able to merge tags, categories and other terms.', 'fewer-tags' ); ?>
+				<?php
+				printf(
+					/* translators: %s: link to Redirection plugin */
+					\esc_html__( 'Fewer Tags requires either the %s plugin by John Godley or the Yoast SEO Premium plugin to be installed and activated to be able to merge tags, categories and other terms.', 'fewer-tags' ),
+					'<a href="https://wordpress.org/plugins/redirection/" target="_blank" rel="noopener noreferrer">Redirection</a>'
+				);
+				?>
 			</p>
 			<p>
 			<?php
@@ -178,7 +220,7 @@ class Admin {
 					: \esc_html__( 'Install Redirection', 'fewer-tags' );
 				?>
 			</a>
-			<a href="https://yoast.com/wordpress/plugins/seo/"><?php \esc_html_e( 'Get Yoast SEO Premium', 'fewer-tags' ); ?></a></p>
+			<a href="https://yoast.com/wordpress/plugins/seo/" target="_blank" rel="noopener noreferrer"><?php \esc_html_e( 'Get Yoast SEO Premium', 'fewer-tags' ); ?></a></p>
 		</div>
 		<?php
 	}

@@ -22,7 +22,9 @@ class Helper {
 	 * @return string The redirect notice HTML.
 	 */
 	public static function redirect_term_notice( $slug, $name, $taxonomy ) {
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Slugs are never user input.
+		$slug     = \esc_attr( $slug );
+		$taxonomy = \esc_attr( $taxonomy );
+
 		$notice  = '<div id="fewer-tags-redirect-' . $slug . '" class="notice notice-error is-dismissible fewer-tags-redirect-notice" data-slug="' . $slug . '">';
 		$notice .= '<p>';
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Output escaped in function.
@@ -80,8 +82,8 @@ class Helper {
 		}
 
 		$msg .= '<ul>';
-		$msg .= '<li style="list-style-type: disc; margin-left: 15px;"><a href="javascript:fewerTagsRedirectToUrl(\'' . $slug . '\',\'' . $taxonomy . '\',\'/\',\'' . \wp_create_nonce( 'fewer_tags_redirect_url' ) . '\')">' . \esc_html__( 'Redirect to homepage', 'fewer-tags' ) . '</a></li>';
-		$msg .= '<li style="list-style-type: disc; margin-left: 15px;"><a href="javascript:fewerTagsRedirectToUrl(\'' . $slug . '\',\'' . $taxonomy . '\',prompt(\'' . \esc_html__( 'Where should the page redirect to?', 'fewer-tags' ) . '\'),\'' . \wp_create_nonce( 'fewer_tags_redirect_url' ) . '\')">' . \esc_html__( 'Redirect to another URL', 'fewer-tags' ) . '</a></li>';
+		$msg .= '<li style="list-style-type: disc; margin-left: 15px;"><a href="javascript:fewerTagsRedirectToUrl(\'' . \esc_js( $slug ) . '\',\'' . \esc_js( $taxonomy ) . '\',\'/\',\'' . \wp_create_nonce( 'fewer_tags_redirect_url' ) . '\')">' . \esc_html__( 'Redirect to homepage', 'fewer-tags' ) . '</a></li>';
+		$msg .= '<li style="list-style-type: disc; margin-left: 15px;"><a href="javascript:fewerTagsRedirectToUrl(\'' . \esc_js( $slug ) . '\',\'' . \esc_js( $taxonomy ) . '\',prompt(\'' . \esc_js( __( 'Where should the page redirect to?', 'fewer-tags' ) ) . '\'),\'' . \wp_create_nonce( 'fewer_tags_redirect_url' ) . '\')">' . \esc_html__( 'Redirect to another URL', 'fewer-tags' ) . '</a></li>';
 		$msg .= '</ul>';
 
 		return $msg;
