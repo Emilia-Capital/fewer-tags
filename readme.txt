@@ -1,12 +1,12 @@
 === Fewer Tags ===
-Contributors: progressplanner,aristath,joostdevalk
-Tags: tag, tags, seo
+Contributors: joostdevalk, aristath, filipi, progressplanner
+Tags: seo, tags, taxonomy, sitemap, archives
 Requires at least: 6.7
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.4
 Stable tag: 2.0
-License: GPL3+
-License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
+License: GPL-3.0-or-later
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Manage your site's tags: set minimum post counts, merge terms across taxonomies, and create redirects when deleting or merging terms.
 

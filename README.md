@@ -1,6 +1,6 @@
-[![CS](https://github.com/jdevalk/fewer-tags/actions/workflows/cs.yml/badge.svg)](https://github.com/jdevalk/fewer-tags/actions/workflows/cs.yml)
-[![Lint](https://github.com/jdevalk/fewer-tags/actions/workflows/lint.yml/badge.svg)](https://github.com/jdevalk/fewer-tags/actions/workflows/lint.yml)
-[![Security](https://github.com/Emilia-Capital/fewer-tags/actions/workflows/security.yml/badge.svg)](https://github.com/Emilia-Capital/fewer-tags/actions/workflows/security.yml)
+[![CS](https://github.com/ProgressPlanner/fewer-tags/actions/workflows/cs.yml/badge.svg)](https://github.com/ProgressPlanner/fewer-tags/actions/workflows/cs.yml)
+[![Lint](https://github.com/ProgressPlanner/fewer-tags/actions/workflows/lint.yml/badge.svg)](https://github.com/ProgressPlanner/fewer-tags/actions/workflows/lint.yml)
+[![Security](https://github.com/ProgressPlanner/fewer-tags/actions/workflows/security.yml/badge.svg)](https://github.com/ProgressPlanner/fewer-tags/actions/workflows/security.yml)
 
 ![Fewer Tags](/.wordpress-org/github_banner_fewer_tags_pp.png)
 
