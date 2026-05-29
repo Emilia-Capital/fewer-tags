@@ -1,119 +1,128 @@
-=== Fewer Tags Free ===
-Contributors: joostdevalk
-Tags: tag, tags, seo
-Requires at least: 6.7
-Tested up to: 6.9
+=== Fewer Tags ===
+Contributors: joostdevalk, aristath, filipi, progressplanner
+Tags: seo, tags, taxonomy, sitemap, archives
+Requires at least: 6.2
+Tested up to: 7.0
 Requires PHP: 7.4
 Stable tag: 1.5.1
-License: GPL3+
-License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
+License: GPL-3.0-or-later
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-This plugin minimizes the effect of having too many tags by setting a minimum number of posts needed for a tag to be “live” on your site.
+Hide low-value WordPress tag archives until a tag has enough posts to be useful for visitors and search engines.
 
 == Description ==
-One of the most common SEO problems on WordPress sites is that people add too many tags to posts. In fact, [our research shows](https://fewertags.com/research/) that _most_ WordPress sites use tags wrong. The WordPress interface makes it incredibly easy to do so, and with every tag you add, you add another URL to your site for search engines to crawl and index. This plugin minimizes that effect by setting a minimum number of posts needed for a tag to be “live” on your site.
 
-Fewer Tags Free solves this problem for you! It does that by simply not showing tags that have less than 10 posts in them to users and search engines.
+Fewer Tags helps you clean up WordPress tag archives by setting a minimum number of posts a tag needs before it becomes live on your site.
 
-Tags that have less than the configured number of posts:
+Many WordPress sites collect lots of tags with only one or two posts. That creates thin archive pages, extra URLs for search engines to crawl, and taxonomy pages that often add little value for visitors. Fewer Tags solves that by hiding low-volume tag archives until they have enough posts to be useful.
 
-* Are hidden from visitors and search engines on your site, and are redirected to your homepage.
-* They don't show up in tag listings.
-* The are no longer linked in WordPress core's or Yoast SEO or Slim SEO generated XML sitemaps.
+By default, tags need 10 posts before they are live. You can change that threshold under Settings → Reading.
 
-This positively affects your site's SEO and also leads to less crawling, as you have less useless tag pages.
+== What Fewer Tags does ==
 
-See [this video](https://www.youtube.com/watch?v=KItn1X1qMas) if you want to learn how to use Fewer Tags Free.
+When a tag has fewer than the configured number of posts:
 
+* Its tag archive redirects to your homepage.
+* It no longer appears in tag listings on your site.
+* It is excluded from WordPress core XML sitemaps.
+* It is excluded from Yoast SEO XML sitemaps.
+* It is excluded from Slim SEO XML sitemaps.
+
+This helps reduce crawl waste while keeping stronger tag archives available.
+
+== Why site owners use Fewer Tags ==
+
+* Reduce thin, low-value tag archive pages.
+* Keep tag archives focused on tags that actually group enough content.
+* Make tag management easier by showing which tags are live in the Tags overview.
+* Improve clarity for both visitors and search engines.
+
+See [our research on tag usage in WordPress](https://fewertags.com/research/) if you want the background behind this approach.
+
+Watch the free plugin walkthrough:
 https://www.youtube.com/watch?v=KItn1X1qMas
 
-If you want to *truly* solve the tag problem on your site, consider the [Fewer Tags Pro plugin & course](https://www.youtube.com/watch?v=NkF3Y6iIoDk). It'll help you fix the problems with tags on your site very quickly.
+If you want help improving your tag strategy more broadly, take a look at [Fewer Tags Pro](https://fewertags.com/).
 
-https://www.youtube.com/watch?v=NkF3Y6iIoDk
+== Installation ==
 
-You can buy Fewer Tags Pro (or read more about it) on [fewertags.com](https://fewertags.com/)!
+1. Install Fewer Tags from Plugins → Add New, or upload the plugin files to your `/wp-content/plugins/` directory.
+2. Activate the plugin.
+3. Go to Settings → Reading.
+4. Set the minimum number of posts a tag needs before it becomes live on your site.
+5. Save your changes.
 
 == Frequently Asked Questions ==
 
 = Can I safely install this on an existing site? =
 
-So you have a site with a lot of tags that don't add any value? Yes, you can safely add this plugin. It will redirect the useless tag pages to your site's homepage.
+Yes. If your site already has many low-value WordPress tags, Fewer Tags will suppress tag archives that fall below your chosen threshold.
 
-= Should I also noindex my tag pages? =
+= Should I noindex my tag pages too? =
 
-No, you should not noindex your tag pages. If your tag pages have more than 10 posts in them, they are valuable ways of getting your site crawled and of combining related content. There's no reason to noindex those pages at that point. What you could (and should) do is add descriptions to those tag pages.
+Usually no. Tag archives can still be useful when they collect enough related content. Fewer Tags is designed to keep useful tag archives live while hiding weak ones.
+
+= Where do I change the minimum number of posts for a tag? =
+
+Go to Settings → Reading in your WordPress admin and adjust the minimum post count there.
+
+= Which sitemap plugins are supported? =
+
+Fewer Tags excludes low-volume tags from WordPress core XML sitemaps, Yoast SEO XML sitemaps, and Slim SEO XML sitemaps.
 
 = How can I report security bugs? =
 
-You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/fewer-tags)
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team helps validate, triage, and handle security vulnerabilities. [Report a security vulnerability](https://patchstack.com/database/vdp/fewer-tags).
 
-= Can you help me get rid of those tags entirely? =
+= Can you help me clean up tags beyond this plugin? =
 
-Yes, that's why we created [Fewer Tags Pro](https://fewertags.com/)!
-
-== Installation ==
-1. Search for Fewer Tags on the repository.
-2. Install the plugin.
-3. Optionally: go to Settings → Reading and adjust the default minimum number of posts (the default is 10).
-4. You're done.
+Yes. If you want more hands-on help reducing and improving tags on your site, have a look at [Fewer Tags Pro](https://fewertags.com/).
 
 == Screenshots ==
-1. The Fewer Tags settings on the Settings → Reading screen.
-2. Fewer Tags adds a column to the Tags overview page, showing which tags are live and which aren't.
-3. Search engines agree with us, this is Fabrice Canel, Head of Bing, on LinkedIn.
+
+1. Fewer Tags settings on the Settings → Reading screen, where you choose how many posts a WordPress tag needs before it becomes live.
+2. The Tags overview shows whether each WordPress tag is live on your site.
+3. A supporting quote about better tag usage and cleaner tag archives.
 
 == Changelog ==
 
 = 1.5.1 =
-
-* Fixes a case where the `keywords` output in the Yoast SEO schema might be of the wrong type.
+* Fix: Prevent incorrect `keywords` output types in Yoast SEO schema in one edge case.
 
 = 1.5 =
-
-Enhancements:
-
-* Add support for Slim SEO, props [Anh Tran](https://profiles.wordpress.org/rilwis/).
-
-Bugfixes:
-
-* Reinstates the "View" action for other taxonomies than tags.
-
-Development:
-
-* Updated PHPCompatibility, added PHPStan and fixed all resulting issues.
+* Enhancement: Add support for Slim SEO sitemaps, props [Anh Tran](https://profiles.wordpress.org/rilwis/).
+* Fix: Reinstate the "View" action for taxonomies other than tags.
+* Dev: Update PHPCompatibility, add PHPStan, and fix the resulting issues.
 
 = 1.4.1 =
-
-* Trigger rebuild because we broke the WordPress.org plugin build system.
+* Fix: Trigger a rebuild after a WordPress.org plugin build issue.
 
 = 1.4 =
-
-* Changed the option name from `joost_min_posts_count` to `fewer_tags` so it's more recognizable for people.
-* Added uninstall functionality that removes the setting from the database on uninstall of the plugin.
-* Simplified the autoloader, no longer requiring composer packages.
-* Added videos for Fewer Tags Free and Fewer Tags Pro to the readme.txt.
+* Change: Rename the option from `joost_min_posts_count` to `fewer_tags` so it is clearer in the database.
+* Enhancement: Add uninstall functionality that removes the setting on uninstall.
+* Dev: Simplify the autoloader and remove the Composer package requirement.
+* Content: Add videos for Fewer Tags Free and Fewer Tags Pro to the readme.
 
 = 1.3.3 =
-
-* Minor stability fixes.
+* Fix: Minor stability improvements.
 
 = 1.3.2 =
-
-* Fix fatal error caused by not loading the autoload file.
+* Fix: Prevent a fatal error caused by not loading the autoload file.
 
 = 1.3 =
-
-* Make sure the output of the Gutenberg terms block is filtered to when it's showing tags.
-* Some minor optimizations to how the plugin is loaded to speed it up.
+* Enhancement: Filter the Gutenberg terms block when it is showing tags.
+* Enhancement: Improve plugin loading performance with minor optimizations.
 
 = 1.2 =
-
-First release on WordPress.org.
+* Release: First release on WordPress.org.
 
 = 1.1 =
-
-Minor header and sanitization improvements.
+* Improvement: Minor header and sanitization improvements.
 
 = 1.0 =
+* Release: Initial release on GitHub.
 
-Initial release on GitHub.
+== Upgrade Notice ==
+
+= 1.5.1 =
+Fixes an edge case in Yoast SEO schema output.
