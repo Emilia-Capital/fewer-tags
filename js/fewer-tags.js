@@ -386,7 +386,7 @@ fewerTagsDomReady( () => {
 			// Otherwise the old value will show up in the dropdown placeholder, super annoying.
 			document.querySelector( '.choices.terms .choices__item' ).innerText = '';
 
-			if ( termID === '1' && element.getAttribute( 'data-term-taxonomy' ) === 'category' ) {
+			if ( fewerTags.defaultTermId && parseInt( termID ) === fewerTags.defaultTermId ) {
 				document.getElementById( 'fewer-tags-note' ).style.display = '';
 				document.querySelector( '#fewer-tags-merge-form h3' ).style.display = 'none';
 			} else {

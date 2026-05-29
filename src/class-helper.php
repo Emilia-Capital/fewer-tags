@@ -64,14 +64,18 @@ class Helper {
 
 		$terms_to_redirect = $options->get( 'terms_to_redirect' );
 
+		if ( ! isset( $terms_to_redirect[ $taxonomy ][ $slug ]['object'] ) || ! $terms_to_redirect[ $taxonomy ][ $slug ]['object'] instanceof \WP_Term ) {
+			return '';
+		}
+
 		$term     = $terms_to_redirect[ $taxonomy ][ $slug ]['object'];
-		$term_url = $terms_to_redirect[ $taxonomy ][ $slug ]['permalink'];
+		$term_url = isset( $terms_to_redirect[ $taxonomy ][ $slug ]['permalink'] ) ? $terms_to_redirect[ $taxonomy ][ $slug ]['permalink'] : '';
 
 		$labels = \get_taxonomy_labels( \get_taxonomy( $taxonomy ) );
 
 		$msg = '<strong>' . \esc_html__( 'Fewer Tags notice', 'fewer-tags' ) . '</strong><br/>';
 		// translators: %1$s is the tag name, %2$s is the tag slug.
-		$msg .= sprintf( \esc_html__( 'You\'ve deleted the %2$s "%1$s", let\'s redirect it?', 'fewer-tags' ), '<a href="' . $term_url . '">' . \esc_html( $term->name ) . '</a>', strtolower( $labels->singular_name ) );
+		$msg .= sprintf( \esc_html__( 'You\'ve deleted the %2$s "%1$s", let\'s redirect it?', 'fewer-tags' ), '<a href="' . esc_url( $term_url ) . '">' . \esc_html( $term->name ) . '</a>', strtolower( $labels->singular_name ) );
 
 		$tool = self::determine_redirect_tool();
 		if ( $tool === 'redirection' ) {

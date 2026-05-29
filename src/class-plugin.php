@@ -161,6 +161,7 @@ class Plugin {
 		if ( ! $this->is_terms_screen() ) {
 			return;
 		}
+		$taxonomy = \get_current_screen()->taxonomy;
 		\add_thickbox();
 		\wp_enqueue_style( 'fewer-tags-choices', \plugins_url( 'js/vendor/choices.min.css', FEWER_TAGS_FILE ), [], '10.2.0' );
 		\wp_add_inline_style(
@@ -236,6 +237,7 @@ class Plugin {
 					'deleteTermNonce' => \wp_create_nonce( 'fewer_tags_just_deleted_term' ),
 					'dismissText'     => __( 'Dismiss this notice.', 'fewer-tags' ),
 					'restAPInonce'    => \wp_create_nonce( 'wp_rest' ),
+					'defaultTermId'   => (int) \get_option( 'default_' . $taxonomy, 0 ),
 				]
 			),
 			'after'
@@ -317,6 +319,9 @@ class Plugin {
 
 		if ( ! empty( $terms_to_redirect ) && count( $terms_to_redirect ) > 0 ) {
 			foreach ( $terms_to_redirect as $slug => $term_array ) {
+				if ( ! isset( $term_array['object'] ) || ! $term_array['object'] instanceof \WP_Term ) {
+					continue;
+				}
 				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- output escaped in function.
 				echo Helper::redirect_term_notice( $slug, $term_array['object']->name, $taxonomy );
 			}

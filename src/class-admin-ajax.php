@@ -86,7 +86,11 @@ class Admin_Ajax {
 		}
 
 		$just_deleted_term = $this->options->get( 'just_deleted_term' );
-		$msg               = Helper::redirect_term_notice( $just_deleted_term->slug, $just_deleted_term->name, $just_deleted_term->taxonomy );
+		if ( ! $just_deleted_term instanceof \WP_Term ) {
+			\wp_send_json_error( [ 'msg' => __( 'No deleted term found.', 'fewer-tags' ) ] );
+		}
+
+		$msg = Helper::redirect_term_notice( $just_deleted_term->slug, $just_deleted_term->name, $just_deleted_term->taxonomy );
 
 		\wp_send_json_success( $msg );
 	}
@@ -178,12 +182,15 @@ class Admin_Ajax {
 		$source_url  = $this->make_relative_url( \get_term_link( $source_term_id, $source_taxonomy ) );
 		$target_url  = $this->make_relative_url( \get_term_link( $target_term_id, $target_taxonomy ) );
 
+		// The default term of a taxonomy cannot be deleted, so we remove it from each post manually after merging.
+		$default_taxonomy_term_id = (int) \get_option( 'default_' . $source_taxonomy, 0 );
+
 		// Get all posts with the source tag and add the target tag to them.
 		$posts = \get_objects_in_term( $source_term_id, $source_taxonomy );
 		foreach ( $posts as $post_id ) {
 			\wp_set_post_terms( (int) $post_id, [ $target_term_id ], $target_taxonomy, true );
-			if ( $source_taxonomy === 'category' && $source_term_id === 1 ) {
-				\wp_remove_object_terms( (int) $post_id, 1, 'category' );
+			if ( $default_taxonomy_term_id && $source_term_id === $default_taxonomy_term_id ) {
+				\wp_remove_object_terms( (int) $post_id, $default_taxonomy_term_id, $source_taxonomy );
 			}
 		}
 		// Remove our term deletion functionality, as now we have merged the tags and thus know where to redirect.
