@@ -40,7 +40,7 @@ See [this video](https://www.youtube.com/watch?v=KItn1X1qMas) if you want to lea
 
 https://www.youtube.com/watch?v=KItn1X1qMas
 
-You can learn more about Fewer Tags on [fewertags.com](https://fewertags.com/)!
+You can learn more about Fewer Tags on [progressplanner.com](https://progressplanner.com/plugins/fewer-tags/)!
 
 == Frequently Asked Questions ==
 
