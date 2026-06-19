@@ -180,7 +180,7 @@ class Admin {
 				<?php
 				printf(
 					/* translators: %s: link to Redirection plugin */
-					\esc_html__( 'Fewer Tags requires either the %s plugin by John Godley or the Yoast SEO Premium plugin to be installed and activated to be able to merge tags, categories and other terms.', 'fewer-tags' ),
+					\esc_html__( 'Fewer Tags can create redirects when you merge or delete tags, categories and other terms, but that requires either the %s plugin by John Godley or the Yoast SEO Premium plugin to be installed and activated.', 'fewer-tags' ),
 					'<a href="https://wordpress.org/plugins/redirection/" target="_blank" rel="noopener noreferrer">Redirection</a>'
 				);
 				?>

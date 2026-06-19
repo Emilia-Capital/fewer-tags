@@ -104,9 +104,10 @@ function fewerTagsRedirectToUrl( slug, taxonomy, target, nonce ) { // eslint-dis
 			_ajax_nonce: nonce,
 		},
 		successAction: ( response ) => {
+			const noticeClass = response.success ? 'notice-success' : 'notice-error';
 			document.getElementById( `fewer-tags-redirect-${ response.data.slug }` )
 				.outerHTML = `
-					<div class="notice notice-success is-dismissible">
+					<div class="notice ${ noticeClass } is-dismissible">
 						<p>${ response.data.msg }</p>
 						<button type="button" class="notice-dismiss">
 							<span class="screen-reader-text">${ fewerTags.dismissText }</span>

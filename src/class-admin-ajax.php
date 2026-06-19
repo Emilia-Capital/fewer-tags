@@ -147,7 +147,14 @@ class Admin_Ajax {
 		$term_url          = $terms_to_redirect[ $taxonomy ][ $slug ]['permalink'];
 
 		$redirects = new Redirects();
-		$redirects->create_redirect_from_slug( $slug, $taxonomy, $target );
+		if ( ! $redirects->create_redirect_from_slug( $slug, $taxonomy, $target ) ) {
+			\wp_send_json_error(
+				[
+					'slug' => $term->slug,
+					'msg'  => __( 'We could not create the redirect. Please make sure the Redirection plugin or Yoast SEO Premium is active.', 'fewer-tags' ),
+				]
+			);
+		}
 
 		\wp_send_json_success(
 			[

@@ -73,11 +73,23 @@ class Helper {
 
 		$labels = \get_taxonomy_labels( \get_taxonomy( $taxonomy ) );
 
+		$term_link = '<a href="' . esc_url( $term_url ) . '">' . \esc_html( $term->name ) . '</a>';
+		$singular  = strtolower( $labels->singular_name );
+
 		$msg = '<strong>' . \esc_html__( 'Fewer Tags notice', 'fewer-tags' ) . '</strong><br/>';
-		// translators: %1$s is the tag name, %2$s is the tag slug.
-		$msg .= sprintf( \esc_html__( 'You\'ve deleted the %2$s "%1$s", let\'s redirect it?', 'fewer-tags' ), '<a href="' . esc_url( $term_url ) . '">' . \esc_html( $term->name ) . '</a>', strtolower( $labels->singular_name ) );
 
 		$tool = self::determine_redirect_tool();
+
+		// Without a redirect tool we cannot create a redirect, so don't offer one. Point the user at the tools instead.
+		if ( ! $tool ) {
+			// translators: %1$s is the term name (linked), %2$s is the singular taxonomy label, e.g. "tag".
+			$msg .= sprintf( \esc_html__( 'You\'ve deleted the %2$s "%1$s". To redirect it, install and activate the Redirection plugin or Yoast SEO Premium.', 'fewer-tags' ), $term_link, $singular );
+			return $msg;
+		}
+
+		// translators: %1$s is the term name (linked), %2$s is the singular taxonomy label, e.g. "tag".
+		$msg .= sprintf( \esc_html__( 'You\'ve deleted the %2$s "%1$s", let\'s redirect it?', 'fewer-tags' ), $term_link, $singular );
+
 		if ( $tool === 'redirection' ) {
 			$msg .= ' ' . \esc_html__( 'We can use your Redirection plugin to do that.', 'fewer-tags' );
 		}
