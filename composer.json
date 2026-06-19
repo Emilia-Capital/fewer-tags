@@ -15,10 +15,10 @@
 		"phpcompatibility/phpcompatibility-wp": "*",
 		"php-parallel-lint/php-parallel-lint": "^1.3",
 		"yoast/wp-test-utils": "^1.2",
-		"phpstan/phpstan": "^1.10",
-		"szepeviktor/phpstan-wordpress": "^1.3",
-		"phpstan/extension-installer": "^1.3",
-		"phpcompatibility/php-compatibility": "dev-develop as 9.99.99"
+		"phpstan/phpstan": "^2.1",
+		"szepeviktor/phpstan-wordpress": "^2.0",
+		"phpstan/extension-installer": "^1.4",
+		"phpcompatibility/php-compatibility": "^9.3"
 	},
 	"scripts": {
 		"check-cs": [
@@ -44,6 +44,9 @@
 		"allow-plugins": {
 			"dealerdirect/phpcodesniffer-composer-installer": true,
 			"phpstan/extension-installer": true
+		},
+		"platform": {
+			"php": "7.4.33"
 		}
 	}
 }

@@ -11,6 +11,8 @@ Fewer Tags helps WordPress sites avoid thin, low-value tag archives.
 
 Instead of letting every tag create another archive URL, the plugin lets you set a minimum number of posts a tag needs before it is considered live on your site. Tags below that threshold are hidden from visitors and search engines, redirected to your homepage, and excluded from supported XML sitemaps.
 
+As of version 2.0, Fewer Tags also lets you merge terms across taxonomies and create redirects when you merge or delete terms — all the functionality previously in Fewer Tags Pro is now included for free.
+
 That means fewer useless tag pages, cleaner taxonomy archives, and less crawl waste.
 
 ## What it does
@@ -24,6 +26,12 @@ Fewer Tags lets you define the minimum number of posts a tag needs before it bec
 - no longer appear in Slim SEO XML sitemaps
 
 The default threshold is 10 posts, and you can change it under **Settings → Reading**.
+
+## Merging and redirects
+
+- Merge any tag, category, or custom taxonomy term into another — even across taxonomies. All posts from the source term are moved to the target term, and a 301 redirect is created from the old term archive to the new one.
+- When you delete a term, Fewer Tags prompts you to create a redirect to the homepage or any other URL.
+- Redirects are created via the [Redirection plugin](https://wordpress.org/plugins/redirection/) or Yoast SEO Premium.
 
 ## Why use it?
 
@@ -44,6 +52,7 @@ Fewer Tags gives you a simple way to keep useful tag archives while suppressing 
 2. Activate the plugin.
 3. Go to **Settings → Reading**.
 4. Choose how many posts a tag needs before it becomes live on your site.
+5. For the merge and redirect-on-delete features, install and activate the [Redirection plugin](https://wordpress.org/plugins/redirection/) or Yoast SEO Premium.
 
 ## FAQ
 
@@ -61,10 +70,9 @@ Please use the Patchstack Vulnerability Disclosure Program to report security is
 
 ## Learn more
 
+- Plugin home: https://progressplanner.com/plugins/fewer-tags/
 - Research: https://fewertags.com/research/
 - Free plugin walkthrough: https://www.youtube.com/watch?v=KItn1X1qMas
-- Fewer Tags Pro: https://fewertags.com/
-- Fewer Tags Pro video: https://www.youtube.com/watch?v=NkF3Y6iIoDk
 
 ## Development
 

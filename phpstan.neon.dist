@@ -1,9 +1,13 @@
 parameters:
   level: 6
   paths:
-    - ./fewer-tags.php
-    - ./src
-  checkGenericClassInNonGenericObjectType: false
+    - .
+  excludePaths:
+    - vendor
+    - tests
   ignoreErrors:
     - '#Method [a-zA-Z0-9\\_\:\(\)]+ return type has no value type specified in iterable type array.#'
     - '#Method [a-zA-Z0-9\\_\:\(\)]+ has parameter \$[a-zA-Z0-9\\_]+ with no value type specified in iterable type array.#'
+    - '#class (Red_Item|Red_Group|WPSEO_Redirect_Option|WPSEO_Redirect|WPSEO_Redirect_Manager)#'
+    - '#Property [a-zA-Z0-9\\_\:\$]+ type has no value type specified in iterable type array.#'
+    - '#Call to function is_array\(\) with array[a-zA-Z0-9<>\\_\s]* will always evaluate to true.#'

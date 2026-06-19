@@ -41,7 +41,7 @@ WP_CORE_DIR=${WP_CORE_DIR-$TMPDIR/wordpress}
 
 download() {
     if [ `which curl` ]; then
-        curl -s "$1" > "$2";
+        curl -sL "$1" > "$2";
     elif [ `which wget` ]; then
         wget -nv -O "$2" "$1"
     fi
@@ -130,8 +130,30 @@ install_test_suite() {
 		# set up testing suite
 		mkdir -p $WP_TESTS_DIR
 		rm -rf $WP_TESTS_DIR/{includes,data}
-		svn export --ignore-externals https://develop.svn.wordpress.org/${WP_TESTS_TAG}/tests/phpunit/includes/ $WP_TESTS_DIR/includes
-		svn export --ignore-externals https://develop.svn.wordpress.org/${WP_TESTS_TAG}/tests/phpunit/data/ $WP_TESTS_DIR/data
+
+		# Use GitHub zip downloads instead of svn export.
+		local GITHUB_TAG=${WP_TESTS_TAG#tags/}
+		local GITHUB_TAG=${GITHUB_TAG#branches/}
+		local WP_TESTS_ZIP_URL=""
+		# Try as a tag first (most common for versioned releases), then as a branch.
+		for ref_type in tags heads; do
+			local test_url="https://github.com/WordPress/wordpress-develop/archive/refs/${ref_type}/${GITHUB_TAG}.zip"
+			local http_code=$(curl -sL -o /dev/null -w "%{http_code}" "$test_url")
+			if [ "$http_code" = "200" ]; then
+				WP_TESTS_ZIP_URL="$test_url"
+				break
+			fi
+		done
+		if [ -z "$WP_TESTS_ZIP_URL" ]; then
+			echo "Could not find WordPress test suite for version ${GITHUB_TAG}"
+			exit 1
+		fi
+		download "$WP_TESTS_ZIP_URL" "$TMPDIR/wp-tests.zip"
+		unzip -q -o "$TMPDIR/wp-tests.zip" -d "$TMPDIR/wp-tests"
+		local WP_TESTS_EXTRACTED_DIR=$(find "$TMPDIR/wp-tests" -maxdepth 1 -mindepth 1 -type d | head -1)
+		cp -r "${WP_TESTS_EXTRACTED_DIR}/tests/phpunit/includes" "$WP_TESTS_DIR/includes"
+		cp -r "${WP_TESTS_EXTRACTED_DIR}/tests/phpunit/data" "$WP_TESTS_DIR/data"
+		rm -rf "$TMPDIR/wp-tests" "$TMPDIR/wp-tests.zip"
 	fi
 
 	if [ ! -f wp-tests-config.php ]; then
